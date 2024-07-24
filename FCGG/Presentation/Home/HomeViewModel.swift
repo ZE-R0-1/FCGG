@@ -17,7 +17,7 @@ class HomeViewModel {
     let searchQuery = PublishSubject<String>()
 
     // Output
-    let divisions = PublishSubject<[Division]>()
+    let userInfo = PublishSubject<(UserBasicInfo, [Division])>()
     let matchIDs = PublishSubject<[String]>()
     let error = PublishSubject<Error>()
 
@@ -37,7 +37,7 @@ class HomeViewModel {
                         return Observable.empty()
                     }
             }
-            .bind(to: divisions)
+            .bind(to: userInfo)
             .disposed(by: disposeBag)
 
         searchQuery

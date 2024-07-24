@@ -25,4 +25,8 @@ class PlayerRepositoryImpl: PlayerRepository {
     func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
         return networkManager.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy)
     }
+
+    func getUserBasicInfo(ouid: String) -> Observable<UserBasicInfo> {
+        return networkManager.getUserBasicInfo(ouid: ouid)
+    }
 }

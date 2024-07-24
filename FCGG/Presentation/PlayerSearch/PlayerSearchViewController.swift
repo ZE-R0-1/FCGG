@@ -13,3 +13,4 @@ class PlayerSearchViewController: UIViewController {
         view.backgroundColor = .lightGray
     }
 }
+

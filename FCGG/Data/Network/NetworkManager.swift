@@ -70,6 +70,10 @@ class NetworkManager {
     func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
         return performRequest(APIEndpoints.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy))
     }
+
+    func getUserBasicInfo(ouid: String) -> Observable<UserBasicInfo> {
+        return performRequest(APIEndpoints.getUserBasicInfo(ouid: ouid))
+    }
 }
 
 enum NetworkError: Error {
@@ -79,4 +83,10 @@ enum NetworkError: Error {
 
 struct PlayerIDResponse: Codable {
     let ouid: String
+}
+
+struct UserBasicInfo: Codable {
+    let ouid: String
+    let nickname: String
+    let level: Int
 }

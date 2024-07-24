@@ -113,12 +113,18 @@ class HomeViewController: UIViewController {
         )
         .withLatestFrom(searchTextField.rx.text.orEmpty)
         .filter { !$0.isEmpty }
-        .do(onNext: { [weak self] query in
+        .do(onNext: { [weak self] _ in
             self?.animateSearchContainerToTop()
-            self?.showSearchResult(for: query)
         })
         .bind(to: viewModel.searchQuery)
         .disposed(by: disposeBag)
+        
+        viewModel.userInfo
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] userInfo, divisions in
+                self?.showSearchResult(for: userInfo, divisions: divisions)
+            })
+            .disposed(by: disposeBag)
         
         viewModel.error
             .observe(on: MainScheduler.instance)
@@ -142,14 +148,15 @@ class HomeViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func showSearchResult(for nickname: String) {
+    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division]) {
         searchResultView.isHidden = false
+        let highestDivision = divisions.min(by: { $0.division < $1.division })
         searchResultView.configure(
-            nickname: nickname,
-            level: 30,
+            nickname: userInfo.nickname,
+            level: userInfo.level,
             rankName: "공식경기",
-            rank: "다이아몬드 1",
-            rankDate: "2023-07-24",
+            rank: highestDivision.map { "Division \($0.division)" } ?? "Unranked",
+            rankDate: highestDivision?.achievementDate ?? "N/A",
             matches: []
         )
     }
