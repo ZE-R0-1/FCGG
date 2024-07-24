@@ -23,7 +23,7 @@ class AppDIContainer {
     lazy var getMatchIDsUseCase: GetMatchIDsUseCase = {
         return GetMatchIDsUseCaseImpl(playerRepository: playerRepository)
     }()
-
+    
     func makeHomeViewController() -> HomeViewController {
         let viewModel = HomeViewModel(searchPlayerUseCase: searchPlayerUseCase, getMatchIDsUseCase: getMatchIDsUseCase)
         return HomeViewController(viewModel: viewModel)

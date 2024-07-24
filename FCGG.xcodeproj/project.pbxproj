@@ -30,6 +30,8 @@
 		CEE260042C50CBA500053335 /* PlayerRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */; };
 		CEE260072C50CBD300053335 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260062C50CBD300053335 /* RxCocoa */; };
 		CEE260092C50CBD300053335 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260082C50CBD300053335 /* RxSwift */; };
+		CEE2600B2C50D7F300053335 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2600A2C50D7F300053335 /* MatchType.swift */; };
+		CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2600C2C50D80700053335 /* DivisionMeta.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
 		CEE25FEC2C50CBA500053335 /* APIEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		CEE25FED2C50CBA500053335 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepositoryImpl.swift; sourceTree = "<group>"; };
+		CEE2600A2C50D7F300053335 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
+		CEE2600C2C50D80700053335 /* DivisionMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionMeta.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,8 @@
 			children = (
 				CEE25FD32C50CBA500053335 /* Division.swift */,
 				CEE25FD42C50CBA500053335 /* Player.swift */,
+				CEE2600A2C50D7F300053335 /* MatchType.swift */,
+				CEE2600C2C50D80700053335 /* DivisionMeta.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -342,10 +348,12 @@
 				CEE25FF82C50CBA500053335 /* GetMatchIdsUseCase.swift in Sources */,
 				CEE25FF52C50CBA500053335 /* Division.swift in Sources */,
 				CEE25FF92C50CBA500053335 /* SearchPlayerUseCase.swift in Sources */,
+				CEE2600B2C50D7F300053335 /* MatchType.swift in Sources */,
 				CEE25FF62C50CBA500053335 /* Player.swift in Sources */,
 				CEE25FFB2C50CBA500053335 /* CommunityViewController.swift in Sources */,
 				CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
+				CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
 				CEE260002C50CBA500053335 /* RankingViewController.swift in Sources */,
 			);

@@ -22,22 +22,10 @@ class SearchResultView: UIView {
         return label
     }()
     
-    private let rankNameLabel: UILabel = {
+    private let rankInfoLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20)
-        return label
-    }()
-
-    private let rankLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    
-    private let rankDateLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -62,16 +50,12 @@ class SearchResultView: UIView {
         
         containerView.addSubview(nicknameLabel)
         containerView.addSubview(levelLabel)
-        containerView.addSubview(rankNameLabel)
-        containerView.addSubview(rankLabel)
-        containerView.addSubview(rankDateLabel)
+        containerView.addSubview(rankInfoLabel)
         containerView.addSubview(matchHistoryTableView)
         
         nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
         levelLabel.translatesAutoresizingMaskIntoConstraints = false
-        rankNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        rankLabel.translatesAutoresizingMaskIntoConstraints = false
-        rankDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        rankInfoLabel.translatesAutoresizingMaskIntoConstraints = false
         matchHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -87,28 +71,20 @@ class SearchResultView: UIView {
             levelLabel.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 8),
             levelLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             
-            rankNameLabel.topAnchor.constraint(equalTo: levelLabel.bottomAnchor, constant: 16),
-            rankNameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rankInfoLabel.topAnchor.constraint(equalTo: levelLabel.bottomAnchor, constant: 16),
+            rankInfoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            rankInfoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
-            rankLabel.topAnchor.constraint(equalTo: rankNameLabel.bottomAnchor, constant: 8),
-            rankLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            
-            rankDateLabel.topAnchor.constraint(equalTo: rankLabel.bottomAnchor, constant: 4),
-            rankDateLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            
-            matchHistoryTableView.topAnchor.constraint(equalTo: rankDateLabel.bottomAnchor, constant: 16),
             matchHistoryTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             matchHistoryTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             matchHistoryTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
-    func configure(nickname: String, level: Int, rankName: String, rank: String, rankDate: String, matches: [String]) {
+    func configure(nickname: String, level: Int, rankInfo: String, matches: [String]) {
         nicknameLabel.text = nickname
         levelLabel.text = "레벨: \(level)"
-        rankNameLabel.text = rankName
-        rankLabel.text = "최고 등급: \(rank)"
-        rankDateLabel.text = "달성일: \(rankDate)"
+        rankInfoLabel.text = rankInfo
         
         matchHistoryTableView.dataSource = self
         matchHistoryTableView.reloadData()

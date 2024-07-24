@@ -119,10 +119,10 @@ class HomeViewController: UIViewController {
         .bind(to: viewModel.searchQuery)
         .disposed(by: disposeBag)
         
-        viewModel.userInfo
+        viewModel.searchResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] userInfo, divisions in
-                self?.showSearchResult(for: userInfo, divisions: divisions)
+            .subscribe(onNext: { [weak self] userInfo, divisions, matchTypes, divisionMetas in
+                self?.showSearchResult(for: userInfo, divisions: divisions, matchTypes: matchTypes, divisionMetas: divisionMetas)
             })
             .disposed(by: disposeBag)
         
@@ -148,15 +148,26 @@ class HomeViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division]) {
+    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division], matchTypes: [MatchType], divisionMetas: [DivisionMeta]) {
         searchResultView.isHidden = false
-        let highestDivision = divisions.min(by: { $0.division < $1.division })
+        
+        let formatDivision: (Division) -> String = { division in
+            let matchTypeDesc = matchTypes.first(where: { $0.matchtype == division.matchType })?.desc ?? "Unknown"
+            let divisionName = divisionMetas.first(where: { $0.divisionId == division.division })?.divisionName ?? "Unknown"
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+            let date = dateFormatter.date(from: division.achievementDate) ?? Date()
+            dateFormatter.dateFormat = "yy.MM.dd HH시"
+            let formattedDate = dateFormatter.string(from: date)
+            return "역대 \(matchTypeDesc): \(divisionName) / \(formattedDate)"
+        }
+        
+        let formattedDivisions = divisions.map(formatDivision).joined(separator: "\n")
+        
         searchResultView.configure(
             nickname: userInfo.nickname,
             level: userInfo.level,
-            rankName: "공식경기",
-            rank: highestDivision.map { "Division \($0.division)" } ?? "Unranked",
-            rankDate: highestDivision?.achievementDate ?? "N/A",
+            rankInfo: formattedDivisions,
             matches: []
         )
     }

@@ -10,6 +10,7 @@ import RxSwift
 
 class NetworkManager {
     private let baseURL = "https://open.api.nexon.com/fconline/v1"
+    private let metaBaseURL = "https://open.api.nexon.com/static/fconline/meta"
     private let apiKey: String
 
     init() {
@@ -19,13 +20,8 @@ class NetworkManager {
         self.apiKey = apiKey
     }
 
-    private func performRequest<T: Decodable>(_ endpoint: String) -> Observable<T> {
+    private func performRequest<T: Decodable>(_ url: URL) -> Observable<T> {
         return Observable.create { observer in
-            guard let url = URL(string: self.baseURL + endpoint) else {
-                observer.onError(NetworkError.invalidURL)
-                return Disposables.create()
-            }
-
             var request = URLRequest(url: url)
             request.addValue(self.apiKey, forHTTPHeaderField: "x-nxopen-api-key")
 
@@ -59,20 +55,45 @@ class NetworkManager {
 
     func getPlayerID(name: String) -> Observable<String> {
         let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? name
-        return performRequest(APIEndpoints.getPlayerID(name: encodedName))
-            .map { (response: PlayerIDResponse) in response.ouid }
+        guard let url = URL(string: baseURL + APIEndpoints.getPlayerID(name: encodedName)) else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url).map { (response: PlayerIDResponse) in response.ouid }
     }
 
     func getMaxDivision(ouid: String) -> Observable<[Division]> {
-        return performRequest(APIEndpoints.getMaxDivision(ouid: ouid))
-    }
-
-    func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
-        return performRequest(APIEndpoints.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy))
+        guard let url = URL(string: baseURL + APIEndpoints.getMaxDivision(ouid: ouid)) else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
     }
 
     func getUserBasicInfo(ouid: String) -> Observable<UserBasicInfo> {
-        return performRequest(APIEndpoints.getUserBasicInfo(ouid: ouid))
+        guard let url = URL(string: baseURL + APIEndpoints.getUserBasicInfo(ouid: ouid)) else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
+    }
+
+    func getMatchTypes() -> Observable<[MatchType]> {
+        guard let url = URL(string: metaBaseURL + "/matchtype.json") else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
+    }
+
+    func getDivisions() -> Observable<[DivisionMeta]> {
+        guard let url = URL(string: metaBaseURL + "/division.json") else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
+    }
+    
+    func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
+        guard let url = URL(string: baseURL + APIEndpoints.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy)) else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
     }
 }
 

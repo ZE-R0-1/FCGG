@@ -8,7 +8,7 @@
 import RxSwift
 
 protocol SearchPlayerUseCase {
-    func execute(name: String) -> Observable<(UserBasicInfo, [Division])>
+    func execute(name: String) -> Observable<(UserBasicInfo, [Division], [MatchType], [DivisionMeta])>
 }
 
 class SearchPlayerUseCaseImpl: SearchPlayerUseCase {
@@ -18,13 +18,15 @@ class SearchPlayerUseCaseImpl: SearchPlayerUseCase {
         self.playerRepository = playerRepository
     }
 
-    func execute(name: String) -> Observable<(UserBasicInfo, [Division])> {
+    func execute(name: String) -> Observable<(UserBasicInfo, [Division], [MatchType], [DivisionMeta])> {
         return playerRepository.getPlayerID(name: name)
-            .flatMap { [weak self] ouid -> Observable<(UserBasicInfo, [Division])> in
+            .flatMap { [weak self] ouid -> Observable<(UserBasicInfo, [Division], [MatchType], [DivisionMeta])> in
                 guard let self = self else { return Observable.empty() }
                 let basicInfo = self.playerRepository.getUserBasicInfo(ouid: ouid)
                 let maxDivision = self.playerRepository.getMaxDivision(ouid: ouid)
-                return Observable.zip(basicInfo, maxDivision)
+                let matchTypes = self.playerRepository.getMatchTypes()
+                let divisions = self.playerRepository.getDivisions()
+                return Observable.zip(basicInfo, maxDivision, matchTypes, divisions)
             }
     }
 }
