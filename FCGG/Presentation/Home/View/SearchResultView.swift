@@ -29,11 +29,23 @@ class SearchResultView: UIView {
         return label
     }()
     
+    private let matchButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        return stackView
+    }()
+    
     private let matchHistoryTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MatchCell")
         return tableView
     }()
+    
+    private var matchButtons: [UIButton] = []
+    private var currentMatchType: String?
+    private var matches: [(String, [String])] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,22 +60,17 @@ class SearchResultView: UIView {
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
-        containerView.addSubview(nicknameLabel)
-        containerView.addSubview(levelLabel)
-        containerView.addSubview(rankInfoLabel)
-        containerView.addSubview(matchHistoryTableView)
-        
-        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
-        levelLabel.translatesAutoresizingMaskIntoConstraints = false
-        rankInfoLabel.translatesAutoresizingMaskIntoConstraints = false
-        matchHistoryTableView.translatesAutoresizingMaskIntoConstraints = false
+        [nicknameLabel, levelLabel, rankInfoLabel, matchButtonsStackView, matchHistoryTableView].forEach {
+            containerView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: topAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
+            
             nicknameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
             nicknameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             nicknameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
@@ -75,30 +82,85 @@ class SearchResultView: UIView {
             rankInfoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             rankInfoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             
+            matchButtonsStackView.topAnchor.constraint(equalTo: rankInfoLabel.bottomAnchor, constant: 16),
+            matchButtonsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            matchButtonsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            
+            matchHistoryTableView.topAnchor.constraint(equalTo: matchButtonsStackView.bottomAnchor, constant: 16),
             matchHistoryTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             matchHistoryTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             matchHistoryTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
-    func configure(nickname: String, level: Int, rankInfo: String, matches: [String]) {
+    func configure(nickname: String, level: Int, rankInfo: String, matches: [(String, [String])]) {
         nicknameLabel.text = nickname
         levelLabel.text = "레벨: \(level)"
         rankInfoLabel.text = rankInfo
+        self.matches = matches
+        
         
         matchHistoryTableView.dataSource = self
-        matchHistoryTableView.reloadData()
+        setupMatchButtons()
+    }
+    
+    private func setupMatchButtons() {
+        matchButtons.forEach { $0.removeFromSuperview() }
+        matchButtons.removeAll()
+        matchButtonsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        for (index, (matchType, _)) in matches.enumerated() {
+            let button = UIButton(type: .system)
+            button.setTitle(matchType, for: .normal)
+            button.tag = index
+            button.addTarget(self, action: #selector(matchButtonTapped(_:)), for: .touchUpInside)
+            matchButtons.append(button)
+            matchButtonsStackView.addArrangedSubview(button)
+        }
+        
+        if let firstMatchType = matches.first?.0 {
+            print("Setting up initial match type: \(firstMatchType)")
+            showMatches(for: firstMatchType)
+        } else {
+            print("No match types available")
+        }
+    }
+    
+    @objc private func matchButtonTapped(_ sender: UIButton) {
+        let matchType = matches[sender.tag].0
+        showMatches(for: matchType)
+    }
+    
+    private func showMatches(for matchType: String) {
+        currentMatchType = matchType
+        matchButtons.forEach { $0.isSelected = $0.title(for: .normal) == matchType }
+        DispatchQueue.main.async {
+            self.matchHistoryTableView.reloadData()
+        }
     }
 }
 
 extension SearchResultView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 // 예시로 5개의 매치 기록을 보여줍니다.
+        guard let currentMatchType = currentMatchType,
+              let matchIds = matches.first(where: { $0.0 == currentMatchType })?.1 else {
+            print("No matches found for type: \(currentMatchType ?? "nil")")
+            return 0
+        }
+        print("Number of matches for \(currentMatchType): \(matchIds.count)")
+        return matchIds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath)
-        cell.textLabel?.text = "매치 \(indexPath.row + 1): 승리" // 예시 데이터
+        guard let currentMatchType = currentMatchType,
+              let matchIds = matches.first(where: { $0.0 == currentMatchType })?.1 else {
+            print("Failed to get match IDs for type: \(currentMatchType ?? "nil")")
+            return cell
+        }
+        let matchId = matchIds[indexPath.row]
+        cell.textLabel?.text = matchId
+        print("Configuring cell for match ID: \(matchId)")
         return cell
     }
 }

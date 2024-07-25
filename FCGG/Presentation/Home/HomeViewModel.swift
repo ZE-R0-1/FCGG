@@ -17,7 +17,7 @@ class HomeViewModel {
     let searchQuery = PublishSubject<String>()
     
     // Output
-    let searchResult = PublishSubject<(UserBasicInfo, [Division], [MatchType], [DivisionMeta])>()
+    let searchResult = PublishSubject<(UserBasicInfo, [Division], [MatchType], [DivisionMeta], [Int: [String]])>()
     let error = PublishSubject<Error>()
     
     init(searchPlayerUseCase: SearchPlayerUseCase, getMatchIDsUseCase: GetMatchIDsUseCase) {

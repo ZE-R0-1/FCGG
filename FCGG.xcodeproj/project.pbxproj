@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE1A9ABE2C521DB0008149C8 /* MatchID.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A9ABD2C521DB0008149C8 /* MatchID.swift */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
 		CEE25FC72C50CB0500053335 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC62C50CB0500053335 /* Base */; };
 		CEE25FF22C50CBA500053335 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE1A9ABD2C521DB0008149C8 /* MatchID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchID.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE25FC62C50CB0500053335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -126,10 +128,11 @@
 		CEE25FD52C50CBA500053335 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD32C50CBA500053335 /* Division.swift */,
 				CEE25FD42C50CBA500053335 /* Player.swift */,
 				CEE2600A2C50D7F300053335 /* MatchType.swift */,
+				CEE25FD32C50CBA500053335 /* Division.swift */,
 				CEE2600C2C50D80700053335 /* DivisionMeta.swift */,
+				CE1A9ABD2C521DB0008149C8 /* MatchID.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
 				CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */,
+				CE1A9ABE2C521DB0008149C8 /* MatchID.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
 				CEE260002C50CBA500053335 /* RankingViewController.swift in Sources */,
 			);

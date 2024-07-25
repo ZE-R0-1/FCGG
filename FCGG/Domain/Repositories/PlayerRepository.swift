@@ -14,4 +14,5 @@ protocol PlayerRepository {
     func getMatchTypes() -> Observable<[MatchType]>
     func getDivisions() -> Observable<[DivisionMeta]>
     func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]>
+    func getUserMatches(ouid: String, matchtype: Int, offset: Int, limit: Int) -> Observable<[String]>
 }

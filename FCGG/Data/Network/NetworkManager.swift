@@ -95,6 +95,13 @@ class NetworkManager {
         }
         return performRequest(url)
     }
+    
+    func getUserMatches(ouid: String, matchtype: Int, offset: Int, limit: Int) -> Observable<[String]> {
+        guard let url = URL(string: baseURL + APIEndpoints.getUserMatches(ouid: ouid, matchtype: matchtype, offset: offset, limit: limit)) else {
+            return Observable.error(NetworkError.invalidURL)
+        }
+        return performRequest(url)
+    }
 }
 
 enum NetworkError: Error {

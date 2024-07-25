@@ -21,4 +21,8 @@ enum APIEndpoints {
     static func getUserBasicInfo(ouid: String) -> String {
         return "/user/basic?ouid=\(ouid)"
     }
+    
+    static func getUserMatches(ouid: String, matchtype: Int, offset: Int, limit: Int) -> String {
+        return "/user/match?ouid=\(ouid)&matchtype=\(matchtype)&offset=\(offset)&limit=\(limit)"
+    }
 }

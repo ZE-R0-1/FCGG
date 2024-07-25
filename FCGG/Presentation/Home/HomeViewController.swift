@@ -121,8 +121,8 @@ class HomeViewController: UIViewController {
         
         viewModel.searchResult
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] userInfo, divisions, matchTypes, divisionMetas in
-                self?.showSearchResult(for: userInfo, divisions: divisions, matchTypes: matchTypes, divisionMetas: divisionMetas)
+            .subscribe(onNext: { [weak self] userInfo, divisions, matchTypes, divisionMetas, matches in
+                self?.showSearchResult(for: userInfo, divisions: divisions, matchTypes: matchTypes, divisionMetas: divisionMetas, matches: matches)
             })
             .disposed(by: disposeBag)
         
@@ -148,7 +148,7 @@ class HomeViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division], matchTypes: [MatchType], divisionMetas: [DivisionMeta]) {
+    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division], matchTypes: [MatchType], divisionMetas: [DivisionMeta], matches: [Int: [String]]) {
         searchResultView.isHidden = false
         
         let formatDivision: (Division) -> String = { division in
@@ -164,11 +164,18 @@ class HomeViewController: UIViewController {
         
         let formattedDivisions = divisions.map(formatDivision).joined(separator: "\n")
         
+        let formattedMatches: [(String, [String])] = matches.map { (matchType, matchIds) in
+            let matchTypeDesc = matchTypes.first(where: { $0.matchtype == matchType })?.desc ?? "Unknown"
+            return (matchTypeDesc, matchIds)
+        }
+        
+        print("Formatted matches: \(formattedMatches)")
+        
         searchResultView.configure(
             nickname: userInfo.nickname,
             level: userInfo.level,
             rankInfo: formattedDivisions,
-            matches: []
+            matches: formattedMatches
         )
     }
 }

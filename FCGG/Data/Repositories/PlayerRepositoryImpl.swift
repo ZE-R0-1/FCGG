@@ -37,4 +37,8 @@ class PlayerRepositoryImpl: PlayerRepository {
     func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
         return networkManager.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy)
     }
+    
+    func getUserMatches(ouid: String, matchtype: Int, offset: Int, limit: Int) -> Observable<[String]> {
+        return networkManager.getUserMatches(ouid: ouid, matchtype: matchtype, offset: offset, limit: limit)
+    }
 }
