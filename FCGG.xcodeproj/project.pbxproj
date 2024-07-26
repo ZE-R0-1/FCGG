@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEE1BBE52C537C9D005B90B7 /* RankInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */; };
+		CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CEE1BBE92C537FBD005B90B7 /* Kingfisher */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
 		CEE25FC72C50CB0500053335 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC62C50CB0500053335 /* Base */; };
 		CEE25FF22C50CBA500053335 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */; };
@@ -33,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankInfoCell.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE25FC62C50CB0500053335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */,
 				CEE260092C50CBD300053335 /* RxSwift in Frameworks */,
 				CEE260072C50CBD300053335 /* RxCocoa in Frameworks */,
 			);
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				CEE25FE02C50CBA500053335 /* SearchResultView.swift */,
+				CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -208,11 +213,11 @@
 			isa = PBXGroup;
 			children = (
 				CEE25FDD2C50CBA500053335 /* Common */,
-				CEE25FDF2C50CBA500053335 /* Community */,
 				CEE25FE42C50CBA500053335 /* Home */,
 				CEE25FE62C50CBA500053335 /* PlayerSearch */,
 				CEE25FE82C50CBA500053335 /* Ranking */,
 				CEE25FEA2C50CBA500053335 /* Statistics */,
+				CEE25FDF2C50CBA500053335 /* Community */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -263,6 +268,7 @@
 			packageProductDependencies = (
 				CEE260062C50CBD300053335 /* RxCocoa */,
 				CEE260082C50CBD300053335 /* RxSwift */,
+				CEE1BBE92C537FBD005B90B7 /* Kingfisher */,
 			);
 			productName = FCGG;
 			productReference = CEE25FB72C50CB0300053335 /* FCGG.app */;
@@ -294,6 +300,7 @@
 			mainGroup = CEE25FAE2C50CB0200053335;
 			packageReferences = (
 				CEE260052C50CBD300053335 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = CEE25FB82C50CB0300053335 /* Products */;
 			projectDirPath = "";
@@ -338,6 +345,7 @@
 				CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
 				CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */,
+				CEE1BBE52C537C9D005B90B7 /* RankInfoCell.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
 				CEE260002C50CBA500053335 /* RankingViewController.swift in Sources */,
 			);
@@ -566,6 +574,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		CEE260052C50CBD300053335 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -577,6 +593,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CEE1BBE92C537FBD005B90B7 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		CEE260062C50CBD300053335 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEE260052C50CBD300053335 /* XCRemoteSwiftPackageReference "RxSwift" */;
