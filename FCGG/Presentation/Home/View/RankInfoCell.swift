@@ -82,9 +82,33 @@ class RankInfoCell: UICollectionViewCell {
             dateLabel.text = maxDivision.achievementDate
         }
         
-        let imageNumber = (divisionMeta.divisionId - 800) / 100
+        let imageNumber = getImageNumber(for: divisionMeta.divisionId)
         let imageURL = URL(string: "https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank\(imageNumber)_m.png")
         rankImageView.kf.setImage(with: imageURL)
+    }
+
+    private func getImageNumber(for divisionId: Int) -> Int {
+        switch divisionId {
+        case 800: return 0
+        case 900: return 1
+        case 1000: return 2
+        case 1100: return 3
+        case 1200: return 4
+        case 1300: return 5
+        case 2000: return 6
+        case 2100: return 7
+        case 2200: return 8
+        case 2300: return 9
+        case 2400: return 10
+        case 2500: return 11
+        case 2600: return 12
+        case 2700: return 13
+        case 2800: return 14
+        case 2900: return 15
+        case 3000: return 16
+        case 3100: return 17
+        default: return 17 // 기본값으로 가장 낮은 등급 이미지 사용
+        }
     }
     
     func calculateCellWidth() -> CGFloat {

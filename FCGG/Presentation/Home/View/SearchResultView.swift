@@ -60,6 +60,8 @@ class SearchResultView: UIView {
     private var currentMatchType: String?
     private var rankInfos: [(MatchType, MaxDivision, DivisionMeta)] = []
     private var matches: [String: [String]] = [:]
+    private var sortedRankInfos: [(MatchType, MaxDivision, DivisionMeta)] = []
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -118,7 +120,12 @@ class SearchResultView: UIView {
     func configure(nickname: String, level: Int, rankInfos: [(MatchType, MaxDivision, DivisionMeta)], matches: [String: [String]]) {
         nicknameLabel.text = nickname
         levelLabel.text = "레벨: \(level)"
-        self.rankInfos = rankInfos
+        
+        // rankInfos를 divisionId 기준으로 정렬
+        self.sortedRankInfos = rankInfos.sorted {
+            $0.2.divisionId < $1.2.divisionId
+        }
+        
         self.matches = matches
         
         rankInfoCollectionView.reloadData()
@@ -161,19 +168,19 @@ class SearchResultView: UIView {
 
 extension SearchResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return rankInfos.count
+        return sortedRankInfos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankInfoCell", for: indexPath) as! RankInfoCell
-        let (matchType, maxDivision, divisionMeta) = rankInfos[indexPath.item]
+        let (matchType, maxDivision, divisionMeta) = sortedRankInfos[indexPath.item]
         cell.configure(matchType: matchType, maxDivision: maxDivision, divisionMeta: divisionMeta)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RankInfoCell", for: indexPath) as! RankInfoCell
-        let (matchType, maxDivision, divisionMeta) = rankInfos[indexPath.item]
+        let (matchType, maxDivision, divisionMeta) = sortedRankInfos[indexPath.item]
         cell.configure(matchType: matchType, maxDivision: maxDivision, divisionMeta: divisionMeta)
         let width = cell.calculateCellWidth()
         return CGSize(width: width, height: collectionView.bounds.height - 20)
