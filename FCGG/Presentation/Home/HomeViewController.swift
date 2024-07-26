@@ -148,10 +148,10 @@ class HomeViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [Division], matchTypes: [MatchType], divisionMetas: [DivisionMeta], matches: [Int: [String]]) {
+    private func showSearchResult(for userInfo: UserBasicInfo, divisions: [MaxDivision], matchTypes: [MatchType], divisionMetas: [DivisionMeta], matches: [Int: [String]]) {
         searchResultView.isHidden = false
         
-        let formatDivision: (Division) -> String = { division in
+        let formatDivision: (MaxDivision) -> String = { division in
             let matchTypeDesc = matchTypes.first(where: { $0.matchtype == division.matchType })?.desc ?? "Unknown"
             let divisionName = divisionMetas.first(where: { $0.divisionId == division.division })?.divisionName ?? "Unknown"
             let dateFormatter = DateFormatter()

@@ -18,7 +18,7 @@ class PlayerRepositoryImpl: PlayerRepository {
         return networkManager.getPlayerID(name: name)
     }
     
-    func getMaxDivision(ouid: String) -> Observable<[Division]> {
+    func getMaxDivision(ouid: String) -> Observable<[MaxDivision]> {
         return networkManager.getMaxDivision(ouid: ouid)
     }
     
@@ -32,10 +32,6 @@ class PlayerRepositoryImpl: PlayerRepository {
     
     func getDivisions() -> Observable<[DivisionMeta]> {
         return networkManager.getDivisions()
-    }
-    
-    func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
-        return networkManager.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy)
     }
     
     func getUserMatches(ouid: String, matchtype: Int, offset: Int, limit: Int) -> Observable<[String]> {

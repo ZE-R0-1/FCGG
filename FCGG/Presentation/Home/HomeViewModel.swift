@@ -10,19 +10,18 @@ import RxCocoa
 
 class HomeViewModel {
     private let searchPlayerUseCase: SearchPlayerUseCase
-    private let getMatchIDsUseCase: GetMatchIDsUseCase
+//    private let getMatchIDsUseCase: GetMatchIDsUseCase
     private let disposeBag = DisposeBag()
     
     // Input
     let searchQuery = PublishSubject<String>()
     
     // Output
-    let searchResult = PublishSubject<(UserBasicInfo, [Division], [MatchType], [DivisionMeta], [Int: [String]])>()
+    let searchResult = PublishSubject<(UserBasicInfo, [MaxDivision], [MatchType], [DivisionMeta], [Int: [String]])>()
     let error = PublishSubject<Error>()
     
-    init(searchPlayerUseCase: SearchPlayerUseCase, getMatchIDsUseCase: GetMatchIDsUseCase) {
+    init(searchPlayerUseCase: SearchPlayerUseCase) {
         self.searchPlayerUseCase = searchPlayerUseCase
-        self.getMatchIDsUseCase = getMatchIDsUseCase
         bindInputs()
     }
 

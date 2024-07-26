@@ -7,16 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE1A9ABE2C521DB0008149C8 /* MatchID.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1A9ABD2C521DB0008149C8 /* MatchID.swift */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
 		CEE25FC72C50CB0500053335 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC62C50CB0500053335 /* Base */; };
 		CEE25FF22C50CBA500053335 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */; };
 		CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD02C50CBA500053335 /* AppDelegate.swift */; };
 		CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD12C50CBA500053335 /* SceneDelegate.swift */; };
-		CEE25FF52C50CBA500053335 /* Division.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD32C50CBA500053335 /* Division.swift */; };
-		CEE25FF62C50CBA500053335 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD42C50CBA500053335 /* Player.swift */; };
+		CEE25FF52C50CBA500053335 /* MaxDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD32C50CBA500053335 /* MaxDivision.swift */; };
 		CEE25FF72C50CBA500053335 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD62C50CBA500053335 /* PlayerRepository.swift */; };
-		CEE25FF82C50CBA500053335 /* GetMatchIdsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD82C50CBA500053335 /* GetMatchIdsUseCase.swift */; };
 		CEE25FF92C50CBA500053335 /* SearchPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */; };
 		CEE25FFA2C50CBA500053335 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FDC2C50CBA500053335 /* MainTabBarController.swift */; };
 		CEE25FFB2C50CBA500053335 /* CommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FDE2C50CBA500053335 /* CommunityViewController.swift */; };
@@ -36,7 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE1A9ABD2C521DB0008149C8 /* MatchID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchID.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE25FC62C50CB0500053335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -44,10 +40,8 @@
 		CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		CEE25FD02C50CBA500053335 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEE25FD12C50CBA500053335 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CEE25FD32C50CBA500053335 /* Division.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Division.swift; sourceTree = "<group>"; };
-		CEE25FD42C50CBA500053335 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CEE25FD32C50CBA500053335 /* MaxDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxDivision.swift; sourceTree = "<group>"; };
 		CEE25FD62C50CBA500053335 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
-		CEE25FD82C50CBA500053335 /* GetMatchIdsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetMatchIdsUseCase.swift; sourceTree = "<group>"; };
 		CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlayerUseCase.swift; sourceTree = "<group>"; };
 		CEE25FDC2C50CBA500053335 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		CEE25FDE2C50CBA500053335 /* CommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityViewController.swift; sourceTree = "<group>"; };
@@ -128,27 +122,16 @@
 		CEE25FD52C50CBA500053335 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD42C50CBA500053335 /* Player.swift */,
-				CEE2600A2C50D7F300053335 /* MatchType.swift */,
-				CEE25FD32C50CBA500053335 /* Division.swift */,
+				CEE25FD32C50CBA500053335 /* MaxDivision.swift */,
 				CEE2600C2C50D80700053335 /* DivisionMeta.swift */,
-				CE1A9ABD2C521DB0008149C8 /* MatchID.swift */,
+				CEE2600A2C50D7F300053335 /* MatchType.swift */,
 			);
 			path = Entities;
-			sourceTree = "<group>";
-		};
-		CEE25FD72C50CBA500053335 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-				CEE25FD62C50CBA500053335 /* PlayerRepository.swift */,
-			);
-			path = Repositories;
 			sourceTree = "<group>";
 		};
 		CEE25FDA2C50CBA500053335 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD82C50CBA500053335 /* GetMatchIdsUseCase.swift */,
 				CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */,
 			);
 			path = UseCases;
@@ -158,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				CEE25FD52C50CBA500053335 /* Entities */,
-				CEE25FD72C50CBA500053335 /* Repositories */,
 				CEE25FDA2C50CBA500053335 /* UseCases */,
 			);
 			path = Domain;
@@ -247,6 +229,7 @@
 		CEE25FF02C50CBA500053335 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				CEE25FD62C50CBA500053335 /* PlayerRepository.swift */,
 				CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */,
 			);
 			path = Repositories;
@@ -348,16 +331,13 @@
 				CEE260012C50CBA500053335 /* StatisticsViewController.swift in Sources */,
 				CEE25FFF2C50CBA500053335 /* PlayerSearchViewController.swift in Sources */,
 				CEE25FFD2C50CBA500053335 /* HomeViewController.swift in Sources */,
-				CEE25FF82C50CBA500053335 /* GetMatchIdsUseCase.swift in Sources */,
-				CEE25FF52C50CBA500053335 /* Division.swift in Sources */,
+				CEE25FF52C50CBA500053335 /* MaxDivision.swift in Sources */,
 				CEE25FF92C50CBA500053335 /* SearchPlayerUseCase.swift in Sources */,
 				CEE2600B2C50D7F300053335 /* MatchType.swift in Sources */,
-				CEE25FF62C50CBA500053335 /* Player.swift in Sources */,
 				CEE25FFB2C50CBA500053335 /* CommunityViewController.swift in Sources */,
 				CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
 				CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */,
-				CE1A9ABE2C521DB0008149C8 /* MatchID.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
 				CEE260002C50CBA500053335 /* RankingViewController.swift in Sources */,
 			);

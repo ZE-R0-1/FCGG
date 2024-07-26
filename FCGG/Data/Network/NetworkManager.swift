@@ -55,13 +55,13 @@ class NetworkManager {
 
     func getPlayerID(name: String) -> Observable<String> {
         let encodedName = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? name
-        guard let url = URL(string: baseURL + APIEndpoints.getPlayerID(name: encodedName)) else {
+        guard let url = URL(string: baseURL + APIEndpoints.getPlayerID(nickName: encodedName)) else {
             return Observable.error(NetworkError.invalidURL)
         }
         return performRequest(url).map { (response: PlayerIDResponse) in response.ouid }
     }
 
-    func getMaxDivision(ouid: String) -> Observable<[Division]> {
+    func getMaxDivision(ouid: String) -> Observable<[MaxDivision]> {
         guard let url = URL(string: baseURL + APIEndpoints.getMaxDivision(ouid: ouid)) else {
             return Observable.error(NetworkError.invalidURL)
         }
@@ -84,13 +84,6 @@ class NetworkManager {
 
     func getDivisions() -> Observable<[DivisionMeta]> {
         guard let url = URL(string: metaBaseURL + "/division.json") else {
-            return Observable.error(NetworkError.invalidURL)
-        }
-        return performRequest(url)
-    }
-    
-    func getMatchIDs(matchType: Int, offset: Int, limit: Int, orderBy: String) -> Observable<[String]> {
-        guard let url = URL(string: baseURL + APIEndpoints.getMatchIDs(matchType: matchType, offset: offset, limit: limit, orderBy: orderBy)) else {
             return Observable.error(NetworkError.invalidURL)
         }
         return performRequest(url)
