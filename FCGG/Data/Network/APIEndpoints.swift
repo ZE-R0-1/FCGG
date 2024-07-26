@@ -8,7 +8,7 @@
 enum APIEndpoints {
     
     // 유저 닉네임을 가져오는 엔드포인트를 반환하는 함수
-    static func getPlayerID(nickName: String) -> String {
+    static func getPlayerNickName(nickName: String) -> String {
         // 주어진 이름을 사용하여 플레이어 ID를 조회하는 URL 경로를 반환
         return "/id?nickname=\(nickName)"
     }
