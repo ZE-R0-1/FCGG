@@ -30,10 +30,4 @@ class AppDIContainer {
         let viewModel = HomeViewModel(searchPlayerUseCase: searchPlayerUseCase)
         return HomeViewController(viewModel: viewModel)
     }
-    
-    // 메인 탭 바 컨트롤러를 생성하는 메서드
-    func makeMainTabBarController() -> UITabBarController {
-        // MainTabBarController를 생성하고, DI 컨테이너를 주입
-        return MainTabBarController(appDIContainer: self)
-    }
 }

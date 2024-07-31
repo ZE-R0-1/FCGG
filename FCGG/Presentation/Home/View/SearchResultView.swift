@@ -42,26 +42,17 @@ class SearchResultView: UIView {
         return collectionView
     }()
     
-    private let matchButtonsStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-        return stackView
-    }()
-    
     private let matchHistoryTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MatchCell")
+        tableView.register(MatchHistoryCell.self, forCellReuseIdentifier: "MatchHistoryCell")
         return tableView
     }()
     
-    private var matchButtons: [UIButton] = []
     private var currentMatchType: String?
     private var rankInfos: [(MatchType, MaxDivision, DivisionMeta)] = []
     private var matches: [String: [String]] = [:]
     private var sortedRankInfos: [(MatchType, MaxDivision, DivisionMeta)] = []
-    
+    private var allMatches: [(matchId: String, matchType: String)] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,7 +67,7 @@ class SearchResultView: UIView {
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
-        [nicknameLabel, levelLabel, bestRankLabel, rankInfoCollectionView, matchButtonsStackView, matchHistoryTableView].forEach {
+        [nicknameLabel, levelLabel, bestRankLabel, rankInfoCollectionView, matchHistoryTableView].forEach {
             containerView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -102,11 +93,7 @@ class SearchResultView: UIView {
             rankInfoCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             rankInfoCollectionView.heightAnchor.constraint(equalToConstant: 120),
             
-            matchButtonsStackView.topAnchor.constraint(equalTo: rankInfoCollectionView.bottomAnchor, constant: 16),
-            matchButtonsStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            matchButtonsStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            
-            matchHistoryTableView.topAnchor.constraint(equalTo: matchButtonsStackView.bottomAnchor, constant: 16),
+            matchHistoryTableView.topAnchor.constraint(equalTo: rankInfoCollectionView.bottomAnchor, constant: 16),
             matchHistoryTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             matchHistoryTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             matchHistoryTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
@@ -115,54 +102,28 @@ class SearchResultView: UIView {
         rankInfoCollectionView.dataSource = self
         rankInfoCollectionView.delegate = self
         matchHistoryTableView.dataSource = self
+        matchHistoryTableView.delegate = self
     }
     
     func configure(nickname: String, level: Int, rankInfos: [(MatchType, MaxDivision, DivisionMeta)], matches: [String: [String]]) {
         nicknameLabel.text = nickname
         levelLabel.text = "레벨: \(level)"
-        
         // rankInfos를 divisionId 기준으로 정렬
         self.sortedRankInfos = rankInfos.sorted {
             $0.2.divisionId < $1.2.divisionId
         }
-        
         self.matches = matches
         
-        rankInfoCollectionView.reloadData()
-        rankInfoCollectionView.collectionViewLayout.invalidateLayout()
-        setupMatchButtons()
-    }
-    
-    private func setupMatchButtons() {
-        matchButtons.forEach { $0.removeFromSuperview() }
-        matchButtons.removeAll()
-        matchButtonsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        self.allMatches = matches.flatMap { (matchType, matchIds) in
+            matchIds.map { (matchId: $0, matchType: matchType) }
+        }.sorted { $0.matchId > $1.matchId }
         
-        for (index, (matchType, _)) in matches.enumerated() {
-            let button = UIButton(type: .system)
-            button.setTitle(matchType, for: .normal)
-            button.tag = index
-            button.addTarget(self, action: #selector(matchButtonTapped(_:)), for: .touchUpInside)
-            matchButtons.append(button)
-            matchButtonsStackView.addArrangedSubview(button)
-        }
-        
-        if let firstMatchType = matches.keys.first {
-            showMatches(for: firstMatchType)
-        }
-    }
-    
-    @objc private func matchButtonTapped(_ sender: UIButton) {
-        let matchType = Array(matches.keys)[sender.tag]
-        showMatches(for: matchType)
-    }
-    
-    private func showMatches(for matchType: String) {
-        currentMatchType = matchType
-        matchButtons.forEach { $0.isSelected = $0.title(for: .normal) == matchType }
         DispatchQueue.main.async {
             self.matchHistoryTableView.reloadData()
         }
+        
+        rankInfoCollectionView.reloadData()
+        rankInfoCollectionView.collectionViewLayout.invalidateLayout()
     }
 }
 
@@ -187,23 +148,15 @@ extension SearchResultView: UICollectionViewDataSource, UICollectionViewDelegate
     }
 }
 
-extension SearchResultView: UITableViewDataSource {
+extension SearchResultView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let currentMatchType = currentMatchType,
-              let matchIds = matches[currentMatchType] else {
-            return 0
-        }
-        return matchIds.count
+        return allMatches.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath)
-        guard let currentMatchType = currentMatchType,
-              let matchIds = matches[currentMatchType] else {
-            return cell
-        }
-        let matchId = matchIds[indexPath.row]
-        cell.textLabel?.text = matchId
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MatchHistoryCell", for: indexPath) as! MatchHistoryCell
+        let match = allMatches[indexPath.row]
+        cell.configure(matchId: match.matchId, matchType: match.matchType)
         return cell
     }
 }
