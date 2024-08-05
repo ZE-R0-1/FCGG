@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = appDIContainer.makeHomeViewController()
+        window.rootViewController = appDIContainer.makeUserSearchViewController()
         self.window = window
         window.makeKeyAndVisible()
     }

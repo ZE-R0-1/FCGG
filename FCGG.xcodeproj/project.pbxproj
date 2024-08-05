@@ -7,50 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE0457642C59CC5600A3AD70 /* MatchHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457632C59CC5600A3AD70 /* MatchHistoryCell.swift */; };
-		CEE1BBE52C537C9D005B90B7 /* RankInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */; };
+		CE0457672C59D04300A3AD70 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457662C59D04300A3AD70 /* User.swift */; };
+		CE0457722C5B177E00A3AD70 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE0457712C5B177E00A3AD70 /* GoogleService-Info.plist */; };
+		CE0457752C5B18D500A3AD70 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CE0457742C5B18D500A3AD70 /* FirebaseAnalytics */; };
+		CE04577F2C5CA88900A3AD70 /* FirebaseFunctionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */; };
+		CE0457882C5CAFAF00A3AD70 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */; };
+		CE04578B2C5CB11500A3AD70 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */; };
+		CE04578D2C6088E700A3AD70 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */; };
+		CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */; };
 		CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CEE1BBE92C537FBD005B90B7 /* Kingfisher */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
 		CEE25FC72C50CB0500053335 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC62C50CB0500053335 /* Base */; };
-		CEE25FF22C50CBA500053335 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */; };
 		CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD02C50CBA500053335 /* AppDelegate.swift */; };
 		CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD12C50CBA500053335 /* SceneDelegate.swift */; };
-		CEE25FF52C50CBA500053335 /* MaxDivision.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD32C50CBA500053335 /* MaxDivision.swift */; };
-		CEE25FF72C50CBA500053335 /* PlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD62C50CBA500053335 /* PlayerRepository.swift */; };
-		CEE25FF92C50CBA500053335 /* SearchPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */; };
-		CEE25FFC2C50CBA500053335 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FE02C50CBA500053335 /* SearchResultView.swift */; };
-		CEE25FFD2C50CBA500053335 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FE22C50CBA500053335 /* HomeViewController.swift */; };
-		CEE25FFE2C50CBA500053335 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FE32C50CBA500053335 /* HomeViewModel.swift */; };
-		CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FEC2C50CBA500053335 /* APIEndpoints.swift */; };
-		CEE260032C50CBA500053335 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FED2C50CBA500053335 /* NetworkManager.swift */; };
-		CEE260042C50CBA500053335 /* PlayerRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */; };
+		CEE25FF72C50CBA500053335 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD62C50CBA500053335 /* UserRepository.swift */; };
+		CEE25FF92C50CBA500053335 /* UserSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FD92C50CBA500053335 /* UserSearchUseCase.swift */; };
+		CEE25FFC2C50CBA500053335 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */; };
 		CEE260072C50CBD300053335 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260062C50CBD300053335 /* RxCocoa */; };
 		CEE260092C50CBD300053335 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260082C50CBD300053335 /* RxSwift */; };
-		CEE2600B2C50D7F300053335 /* MatchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2600A2C50D7F300053335 /* MatchType.swift */; };
-		CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2600C2C50D80700053335 /* DivisionMeta.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE0457632C59CC5600A3AD70 /* MatchHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHistoryCell.swift; sourceTree = "<group>"; };
-		CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankInfoCell.swift; sourceTree = "<group>"; };
+		CE0457662C59D04300A3AD70 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CE0457712C5B177E00A3AD70 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionsService.swift; sourceTree = "<group>"; };
+		CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
+		CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewModel.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE25FC62C50CB0500053335 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CEE25FC82C50CB0500053335 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		CEE25FD02C50CBA500053335 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEE25FD12C50CBA500053335 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		CEE25FD32C50CBA500053335 /* MaxDivision.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxDivision.swift; sourceTree = "<group>"; };
-		CEE25FD62C50CBA500053335 /* PlayerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepository.swift; sourceTree = "<group>"; };
-		CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlayerUseCase.swift; sourceTree = "<group>"; };
-		CEE25FE02C50CBA500053335 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
-		CEE25FE22C50CBA500053335 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		CEE25FE32C50CBA500053335 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		CEE25FEC2C50CBA500053335 /* APIEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
-		CEE25FED2C50CBA500053335 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRepositoryImpl.swift; sourceTree = "<group>"; };
-		CEE2600A2C50D7F300053335 /* MatchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchType.swift; sourceTree = "<group>"; };
-		CEE2600C2C50D80700053335 /* DivisionMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionMeta.swift; sourceTree = "<group>"; };
+		CEE25FD62C50CBA500053335 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		CEE25FD92C50CBA500053335 /* UserSearchUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchUseCase.swift; sourceTree = "<group>"; };
+		CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +52,8 @@
 			files = (
 				CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */,
 				CEE260092C50CBD300053335 /* RxSwift in Frameworks */,
+				CE04578B2C5CB11500A3AD70 /* FirebaseFunctions in Frameworks */,
+				CE0457752C5B18D500A3AD70 /* FirebaseAnalytics in Frameworks */,
 				CEE260072C50CBD300053335 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,11 +61,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE0457892C5CB11500A3AD70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CEE25FAE2C50CB0200053335 = {
 			isa = PBXGroup;
 			children = (
 				CEE25FB92C50CB0300053335 /* FCGG */,
 				CEE25FB82C50CB0300053335 /* Products */,
+				CE0457892C5CB11500A3AD70 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,24 +88,16 @@
 		CEE25FB92C50CB0300053335 /* FCGG */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD22C50CBA500053335 /* App */,
-				CEE25FF12C50CBA500053335 /* Data */,
-				CEE25FCF2C50CBA500053335 /* DI */,
-				CEE25FDB2C50CBA500053335 /* Domain */,
 				CEE25FEB2C50CBA500053335 /* Presentation */,
+				CEE25FDB2C50CBA500053335 /* Domain */,
+				CEE25FF12C50CBA500053335 /* Data */,
+				CEE25FD22C50CBA500053335 /* App */,
 				CEE25FC32C50CB0500053335 /* Assets.xcassets */,
 				CEE25FC52C50CB0500053335 /* LaunchScreen.storyboard */,
 				CEE25FC82C50CB0500053335 /* Info.plist */,
+				CE0457712C5B177E00A3AD70 /* GoogleService-Info.plist */,
 			);
 			path = FCGG;
-			sourceTree = "<group>";
-		};
-		CEE25FCF2C50CBA500053335 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				CEE25FCE2C50CBA500053335 /* AppDIContainer.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		CEE25FD22C50CBA500053335 /* App */ = {
@@ -111,6 +105,7 @@
 			children = (
 				CEE25FD02C50CBA500053335 /* AppDelegate.swift */,
 				CEE25FD12C50CBA500053335 /* SceneDelegate.swift */,
+				CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -118,9 +113,7 @@
 		CEE25FD52C50CBA500053335 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD32C50CBA500053335 /* MaxDivision.swift */,
-				CEE2600C2C50D80700053335 /* DivisionMeta.swift */,
-				CEE2600A2C50D7F300053335 /* MatchType.swift */,
+				CE0457662C59D04300A3AD70 /* User.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -128,7 +121,7 @@
 		CEE25FDA2C50CBA500053335 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD92C50CBA500053335 /* SearchPlayerUseCase.swift */,
+				CEE25FD92C50CBA500053335 /* UserSearchUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -142,56 +135,36 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
-		CEE25FDD2C50CBA500053335 /* Common */ = {
+		CEE25FE12C50CBA500053335 /* UserSearch */ = {
 			isa = PBXGroup;
 			children = (
+				CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */,
+				CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */,
+				CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */,
 			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		CEE25FE12C50CBA500053335 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				CEE25FE02C50CBA500053335 /* SearchResultView.swift */,
-				CEE1BBE42C537C9D005B90B7 /* RankInfoCell.swift */,
-				CE0457632C59CC5600A3AD70 /* MatchHistoryCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		CEE25FE42C50CBA500053335 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				CEE25FE12C50CBA500053335 /* View */,
-				CEE25FE22C50CBA500053335 /* HomeViewController.swift */,
-				CEE25FE32C50CBA500053335 /* HomeViewModel.swift */,
-			);
-			path = Home;
+			path = UserSearch;
 			sourceTree = "<group>";
 		};
 		CEE25FEB2C50CBA500053335 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FDD2C50CBA500053335 /* Common */,
-				CEE25FE42C50CBA500053335 /* Home */,
+				CEE25FE12C50CBA500053335 /* UserSearch */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		CEE25FEE2C50CBA500053335 /* Network */ = {
+		CEE25FEE2C50CBA500053335 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FEC2C50CBA500053335 /* APIEndpoints.swift */,
-				CEE25FED2C50CBA500053335 /* NetworkManager.swift */,
+				CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */,
 			);
-			path = Network;
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 		CEE25FF02C50CBA500053335 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FD62C50CBA500053335 /* PlayerRepository.swift */,
-				CEE25FEF2C50CBA500053335 /* PlayerRepositoryImpl.swift */,
+				CEE25FD62C50CBA500053335 /* UserRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -199,8 +172,8 @@
 		CEE25FF12C50CBA500053335 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				CEE25FEE2C50CBA500053335 /* Network */,
 				CEE25FF02C50CBA500053335 /* Repositories */,
+				CEE25FEE2C50CBA500053335 /* DataSources */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -225,6 +198,8 @@
 				CEE260062C50CBD300053335 /* RxCocoa */,
 				CEE260082C50CBD300053335 /* RxSwift */,
 				CEE1BBE92C537FBD005B90B7 /* Kingfisher */,
+				CE0457742C5B18D500A3AD70 /* FirebaseAnalytics */,
+				CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */,
 			);
 			productName = FCGG;
 			productReference = CEE25FB72C50CB0300053335 /* FCGG.app */;
@@ -257,6 +232,7 @@
 			packageReferences = (
 				CEE260052C50CBD300053335 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = CEE25FB82C50CB0300053335 /* Products */;
 			projectDirPath = "";
@@ -274,6 +250,7 @@
 			files = (
 				CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */,
 				CEE25FC72C50CB0500053335 /* Base in Resources */,
+				CE0457722C5B177E00A3AD70 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,22 +261,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEE25FF22C50CBA500053335 /* AppDIContainer.swift in Sources */,
-				CEE25FFC2C50CBA500053335 /* SearchResultView.swift in Sources */,
-				CE0457642C59CC5600A3AD70 /* MatchHistoryCell.swift in Sources */,
-				CEE25FF72C50CBA500053335 /* PlayerRepository.swift in Sources */,
-				CEE260032C50CBA500053335 /* NetworkManager.swift in Sources */,
-				CEE260042C50CBA500053335 /* PlayerRepositoryImpl.swift in Sources */,
-				CEE25FFE2C50CBA500053335 /* HomeViewModel.swift in Sources */,
-				CEE25FFD2C50CBA500053335 /* HomeViewController.swift in Sources */,
-				CEE25FF52C50CBA500053335 /* MaxDivision.swift in Sources */,
-				CEE25FF92C50CBA500053335 /* SearchPlayerUseCase.swift in Sources */,
-				CEE2600B2C50D7F300053335 /* MatchType.swift in Sources */,
-				CEE260022C50CBA500053335 /* APIEndpoints.swift in Sources */,
+				CEE25FFC2C50CBA500053335 /* UserSearchViewController.swift in Sources */,
+				CEE25FF72C50CBA500053335 /* UserRepository.swift in Sources */,
+				CEE25FF92C50CBA500053335 /* UserSearchUseCase.swift in Sources */,
+				CE04577F2C5CA88900A3AD70 /* FirebaseFunctionsService.swift in Sources */,
+				CE04578D2C6088E700A3AD70 /* UserTableViewCell.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
-				CEE2600D2C50D80700053335 /* DivisionMeta.swift in Sources */,
-				CEE1BBE52C537C9D005B90B7 /* RankInfoCell.swift in Sources */,
+				CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
+				CE0457672C59D04300A3AD70 /* User.swift in Sources */,
+				CE0457882C5CAFAF00A3AD70 /* AppDIContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +497,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
 		CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -545,6 +524,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE0457742C5B18D500A3AD70 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
 		CEE1BBE92C537FBD005B90B7 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEE1BBE82C537FBD005B90B7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
