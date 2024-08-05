@@ -14,6 +14,8 @@
 		CE0457882C5CAFAF00A3AD70 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */; };
 		CE04578B2C5CB11500A3AD70 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */; };
 		CE04578D2C6088E700A3AD70 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */; };
+		CE0457902C60949D00A3AD70 /* APIErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */; };
+		CE0457922C6094AF00A3AD70 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */; };
 		CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */; };
 		CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CEE1BBE92C537FBD005B90B7 /* Kingfisher */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 		CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionsService.swift; sourceTree = "<group>"; };
 		CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
 		CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
+		CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorHandler.swift; sourceTree = "<group>"; };
+		CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewModel.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,6 +72,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE04578E2C60947E00A3AD70 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */,
+				CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		CEE25FAE2C50CB0200053335 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +104,7 @@
 				CEE25FEB2C50CBA500053335 /* Presentation */,
 				CEE25FDB2C50CBA500053335 /* Domain */,
 				CEE25FF12C50CBA500053335 /* Data */,
+				CE04578E2C60947E00A3AD70 /* Utilities */,
 				CEE25FD22C50CBA500053335 /* App */,
 				CEE25FC32C50CB0500053335 /* Assets.xcassets */,
 				CEE25FC52C50CB0500053335 /* LaunchScreen.storyboard */,
@@ -270,7 +284,9 @@
 				CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
 				CE0457672C59D04300A3AD70 /* User.swift in Sources */,
+				CE0457902C60949D00A3AD70 /* APIErrorHandler.swift in Sources */,
 				CE0457882C5CAFAF00A3AD70 /* AppDIContainer.swift in Sources */,
+				CE0457922C6094AF00A3AD70 /* AlertPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

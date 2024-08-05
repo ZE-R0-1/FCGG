@@ -30,7 +30,7 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
     
     private let searchField: UITextField = {
         let field = UITextField()
-        field.placeholder = "플레이어 검색"
+        field.placeholder = "구단주명"
         field.font = UIFont.systemFont(ofSize: 18)
         field.borderStyle = .none
         field.returnKeyType = .search

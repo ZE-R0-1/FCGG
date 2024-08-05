@@ -19,7 +19,11 @@ class FirebaseFunctionsServiceImpl: FirebaseFunctionsService {
             Functions.functions().httpsCallable("getPlayerData").call(["nickname": name]) { result, error in
                 if let error = error as NSError? {
                     print("오류 발생: \(error.localizedDescription)")
-                    print("오류 세부사항: \(error.userInfo)")
+                    if let errorDetails = error.userInfo["NSLocalizedDescription"] as? String {
+                        print("오류 세부사항: \(errorDetails)")
+                        let title = APIErrorHandler.getMessage(for: errorDetails)
+                        AlertPresenter.showAlert(title: title, message: "오타를 확인 후 다시 검색해주세요")
+                    }
                     observer.onError(error)
                 } else if let data = result?.data as? [String: Any] {
                     print("받은 데이터: \(data)")
