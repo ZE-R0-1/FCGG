@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class UserSearchViewController: UIViewController, UIScrollViewDelegate {
+class UserSearchViewController: UIViewController {
     private let searchContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -37,14 +37,12 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
         return field
     }()
     
-    private let tableView: UITableView = {
-        let table = UITableView()
-        table.backgroundColor = .clear
-        table.separatorStyle = .none
-        table.rowHeight = 100
-        table.alpha = 0 // 초기에는 숨김
-        return table
-    }()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    
+    private let userInfoView = UserInfoView()
+    private let divisionTitleLabel = UILabel()
+    private let divisionsStackView = UIStackView()
     
     private let viewModel: UserSearchViewModel
     private let disposeBag = DisposeBag()
@@ -52,8 +50,6 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
     private var searchContainerCenterYConstraint: NSLayoutConstraint?
     private var searchContainerTopConstraint: NSLayoutConstraint?
     
-    private var currentUser: User?
-
     init(viewModel: UserSearchViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -75,12 +71,22 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(searchContainerView)
         searchContainerView.addSubview(searchButton)
         searchContainerView.addSubview(searchField)
-        view.addSubview(tableView)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(userInfoView)
+        contentView.addSubview(divisionTitleLabel)
+        contentView.addSubview(divisionsStackView)
         
         searchContainerView.translatesAutoresizingMaskIntoConstraints = false
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         searchField.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        userInfoView.translatesAutoresizingMaskIntoConstraints = false
+        divisionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        divisionsStackView.translatesAutoresizingMaskIntoConstraints = false
         
         searchContainerCenterYConstraint = searchContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         searchContainerTopConstraint = searchContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
@@ -101,14 +107,40 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
             searchField.trailingAnchor.constraint(equalTo: searchButton.leadingAnchor, constant: -10),
             searchField.centerYAnchor.constraint(equalTo: searchContainerView.centerYAnchor),
             
-            tableView.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 20),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            scrollView.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 20),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            userInfoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            userInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            userInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            divisionTitleLabel.topAnchor.constraint(equalTo: userInfoView.bottomAnchor, constant: 20),
+            divisionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            divisionTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            divisionsStackView.topAnchor.constraint(equalTo: divisionTitleLabel.bottomAnchor, constant: 10),
+            divisionsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            divisionsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            divisionsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
         
-        tableView.register(UserTableViewCell.self, forCellReuseIdentifier: "UserCell")
-        tableView.dataSource = self
+        divisionTitleLabel.text = "최고 등급"
+        divisionTitleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        
+        divisionsStackView.axis = .vertical
+        divisionsStackView.spacing = 10
+        
+        userInfoView.isHidden = true
+        divisionTitleLabel.isHidden = true
+        divisionsStackView.isHidden = true
     }
     
     private func bindViewModel() {
@@ -122,16 +154,30 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
             .disposed(by: disposeBag)
         
         viewModel.user
-            .do(onNext: { [weak self] user in
-                self?.currentUser = user
-                self?.showTableView()
-                self?.tableView.reloadData()
+            .drive(onNext: { [weak self] user in
+                self?.userInfoView.configure(with: user)
+                self?.configureDivisions(with: user.maxDivisions)
+                self?.showUserInfo()
             })
-            .subscribe()
             .disposed(by: disposeBag)
+    }
+    
+    private func configureDivisions(with divisions: [MaxDivision]) {
+        divisionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        divisions.forEach { division in
+            let divisionView = DivisionCardView()
+            divisionView.configure(with: division)  // 이 줄을 추가
+            divisionsStackView.addArrangedSubview(divisionView)
+        }
+    }
+    
+    private func showUserInfo() {
+        UIView.animate(withDuration: 0.3) {
+            self.userInfoView.isHidden = false
+            self.divisionTitleLabel.isHidden = false
+            self.divisionsStackView.isHidden = false
+        }
     }
     
     private func animateSearchToTop() {
@@ -140,27 +186,5 @@ class UserSearchViewController: UIViewController, UIScrollViewDelegate {
             self.searchContainerTopConstraint?.isActive = true
             self.view.layoutIfNeeded()
         }
-    }
-    
-    private func showTableView() {
-        UIView.animate(withDuration: 0.3) {
-            self.tableView.alpha = 1
-        }
-    }
-}
-
-extension UserSearchViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentUser != nil ? 1 : 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserTableViewCell,
-              let user = currentUser else {
-            return UITableViewCell()
-        }
-        
-        cell.configure(with: user)
-        return cell
     }
 }

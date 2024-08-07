@@ -13,9 +13,9 @@
 		CE04577F2C5CA88900A3AD70 /* FirebaseFunctionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */; };
 		CE0457882C5CAFAF00A3AD70 /* AppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */; };
 		CE04578B2C5CB11500A3AD70 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */; };
-		CE04578D2C6088E700A3AD70 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */; };
 		CE0457902C60949D00A3AD70 /* APIErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */; };
 		CE0457922C6094AF00A3AD70 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */; };
+		CE0457942C61B47900A3AD70 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CE0457932C61B47900A3AD70 /* FirebaseStorage */; };
 		CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */; };
 		CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CEE1BBE92C537FBD005B90B7 /* Kingfisher */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
@@ -27,6 +27,10 @@
 		CEE25FFC2C50CBA500053335 /* UserSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */; };
 		CEE260072C50CBD300053335 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260062C50CBD300053335 /* RxCocoa */; };
 		CEE260092C50CBD300053335 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CEE260082C50CBD300053335 /* RxSwift */; };
+		CEF0F3762C61BBAB00F5CBC6 /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F3752C61BBAB00F5CBC6 /* UserDetailViewController.swift */; };
+		CEF0F3782C61BBC300F5CBC6 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F3772C61BBC300F5CBC6 /* UserInfoView.swift */; };
+		CEF0F37A2C61BBD400F5CBC6 /* DivisionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F3792C61BBD400F5CBC6 /* DivisionCardView.swift */; };
+		CEF0F37E2C61D83E00F5CBC6 /* UserDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF0F37D2C61D83E00F5CBC6 /* UserDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +38,6 @@
 		CE0457712C5B177E00A3AD70 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE04577E2C5CA88900A3AD70 /* FirebaseFunctionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFunctionsService.swift; sourceTree = "<group>"; };
 		CE0457872C5CAFAF00A3AD70 /* AppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDIContainer.swift; sourceTree = "<group>"; };
-		CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorHandler.swift; sourceTree = "<group>"; };
 		CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewModel.swift; sourceTree = "<group>"; };
@@ -47,6 +50,10 @@
 		CEE25FD62C50CBA500053335 /* UserRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		CEE25FD92C50CBA500053335 /* UserSearchUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchUseCase.swift; sourceTree = "<group>"; };
 		CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSearchViewController.swift; sourceTree = "<group>"; };
+		CEF0F3752C61BBAB00F5CBC6 /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
+		CEF0F3772C61BBC300F5CBC6 /* UserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoView.swift; sourceTree = "<group>"; };
+		CEF0F3792C61BBD400F5CBC6 /* DivisionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DivisionCardView.swift; sourceTree = "<group>"; };
+		CEF0F37D2C61D83E00F5CBC6 /* UserDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +66,7 @@
 				CE04578B2C5CB11500A3AD70 /* FirebaseFunctions in Frameworks */,
 				CE0457752C5B18D500A3AD70 /* FirebaseAnalytics in Frameworks */,
 				CEE260072C50CBD300053335 /* RxCocoa in Frameworks */,
+				CE0457942C61B47900A3AD70 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +162,6 @@
 			children = (
 				CEE25FE02C50CBA500053335 /* UserSearchViewController.swift */,
 				CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */,
-				CE04578C2C6088E700A3AD70 /* UserTableViewCell.swift */,
 			);
 			path = UserSearch;
 			sourceTree = "<group>";
@@ -162,6 +169,7 @@
 		CEE25FEB2C50CBA500053335 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				CEF0F3742C61BB9900F5CBC6 /* UserDetail */,
 				CEE25FE12C50CBA500053335 /* UserSearch */,
 			);
 			path = Presentation;
@@ -192,6 +200,17 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		CEF0F3742C61BB9900F5CBC6 /* UserDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CEF0F3752C61BBAB00F5CBC6 /* UserDetailViewController.swift */,
+				CEF0F3772C61BBC300F5CBC6 /* UserInfoView.swift */,
+				CEF0F3792C61BBD400F5CBC6 /* DivisionCardView.swift */,
+				CEF0F37D2C61D83E00F5CBC6 /* UserDetailViewModel.swift */,
+			);
+			path = UserDetail;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -214,6 +233,7 @@
 				CEE1BBE92C537FBD005B90B7 /* Kingfisher */,
 				CE0457742C5B18D500A3AD70 /* FirebaseAnalytics */,
 				CE04578A2C5CB11500A3AD70 /* FirebaseFunctions */,
+				CE0457932C61B47900A3AD70 /* FirebaseStorage */,
 			);
 			productName = FCGG;
 			productReference = CEE25FB72C50CB0300053335 /* FCGG.app */;
@@ -276,10 +296,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEE25FFC2C50CBA500053335 /* UserSearchViewController.swift in Sources */,
+				CEF0F3782C61BBC300F5CBC6 /* UserInfoView.swift in Sources */,
+				CEF0F37E2C61D83E00F5CBC6 /* UserDetailViewModel.swift in Sources */,
 				CEE25FF72C50CBA500053335 /* UserRepository.swift in Sources */,
+				CEF0F3762C61BBAB00F5CBC6 /* UserDetailViewController.swift in Sources */,
 				CEE25FF92C50CBA500053335 /* UserSearchUseCase.swift in Sources */,
 				CE04577F2C5CA88900A3AD70 /* FirebaseFunctionsService.swift in Sources */,
-				CE04578D2C6088E700A3AD70 /* UserTableViewCell.swift in Sources */,
+				CEF0F37A2C61BBD400F5CBC6 /* DivisionCardView.swift in Sources */,
 				CEE25FF32C50CBA500053335 /* AppDelegate.swift in Sources */,
 				CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */,
 				CEE25FF42C50CBA500053335 /* SceneDelegate.swift in Sources */,
@@ -549,6 +572,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFunctions;
+		};
+		CE0457932C61B47900A3AD70 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CE0457732C5B18D500A3AD70 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		CEE1BBE92C537FBD005B90B7 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

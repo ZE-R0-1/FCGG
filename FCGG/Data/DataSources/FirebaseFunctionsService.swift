@@ -29,8 +29,32 @@ class FirebaseFunctionsServiceImpl: FirebaseFunctionsService {
                     print("받은 데이터: \(data)")
                     if let ouid = data["ouid"] as? String,
                        let nickname = data["nickname"] as? String,
-                       let level = data["level"] as? Int {
-                        let user = User(ouid: ouid, nickname: nickname, level: level)
+                       let level = data["level"] as? Int,
+                       let maxDivisionsData = data["maxDivisions"] as? [[String: Any]] {
+                        
+                        let maxDivisions = maxDivisionsData.compactMap { divisionData -> MaxDivision? in
+                            guard let matchType = divisionData["matchType"] as? Int,
+                                  let matchTypeDesc = divisionData["matchTypeDesc"] as? String,
+                                  let division = divisionData["division"] as? Int,
+                                  let divisionName = divisionData["divisionName"] as? String,
+                                  let achievementDate = divisionData["achievementDate"] as? String,
+                                  let imageUrl = divisionData["imageUrl"] as? String else {
+                                return nil
+                            }
+                            
+                            return MaxDivision(matchType: matchType,
+                                               matchTypeDesc: matchTypeDesc,
+                                               division: division,
+                                               divisionName: divisionName,
+                                               achievementDate: achievementDate,
+                                               imageUrl: imageUrl)
+                        }
+                        
+                        let user = User(ouid: ouid,
+                                        nickname: nickname,
+                                        level: level,
+                                        maxDivisions: maxDivisions)
+                        
                         observer.onNext(user)
                         observer.onCompleted()
                     } else {

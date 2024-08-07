@@ -1,5 +1,5 @@
 //
-//  RankInfoCell.swift
+//  UserSearchViewModel.swift
 //  FCGG
 //
 //  Created by USER on 7/26/24.
@@ -12,16 +12,8 @@ import Foundation
 class UserSearchViewModel {
     private let useCase: UserSearchUseCase
     let searchText = PublishSubject<String>()
-    let user = PublishSubject<User>()
-    private let disposeBag = DisposeBag()
-
-    init(useCase: UserSearchUseCase) {
-        self.useCase = useCase
-        bindSearchText()
-    }
-    
-    private func bindSearchText() {
-        searchText
+    lazy var user: Driver<User> = {
+        return self.searchText
             .filter { !$0.isEmpty }
             .flatMapLatest { [unowned self] query in
                 self.useCase.searchUser(name: query)
@@ -35,7 +27,12 @@ class UserSearchViewModel {
                         return Observable.empty()
                     }
             }
-            .bind(to: user)
-            .disposed(by: disposeBag)
+            .asDriver(onErrorJustReturn: User(ouid: "", nickname: "", level: 0, maxDivisions: []))
+    }()
+    
+    private let disposeBag = DisposeBag()
+
+    init(useCase: UserSearchUseCase) {
+        self.useCase = useCase
     }
 }

@@ -9,7 +9,8 @@ import UIKit
 
 class AppDIContainer {
     
-    // 의존성들을 여기에 선언
+    // MARK: - Shared Dependencies
+    
     lazy var firebaseFunctions: FirebaseFunctionsService = {
         return FirebaseFunctionsServiceImpl()
     }()
@@ -17,6 +18,8 @@ class AppDIContainer {
     lazy var userRepository: UserRepository = {
         return UserRepositoryImpl(firebaseFunctions: firebaseFunctions)
     }()
+    
+    // MARK: - View Controllers
     
     func makeUserSearchViewController() -> UIViewController {
         let useCase = UserSearchUseCaseImpl(repository: userRepository)

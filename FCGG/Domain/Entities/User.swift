@@ -11,4 +11,14 @@ struct User: Codable {
     let ouid: String
     let nickname: String
     let level: Int
+    let maxDivisions: [MaxDivision]
+}
+
+struct MaxDivision: Codable {
+    let matchType: Int
+    let matchTypeDesc: String
+    let division: Int
+    let divisionName: String
+    let achievementDate: String
+    let imageUrl: String
 }
