@@ -42,6 +42,7 @@ class UserSearchViewController: UIViewController {
     
     private let userInfoView = UserInfoView()
     private let divisionTitleLabel = UILabel()
+    private let divisionsScrollView = UIScrollView()
     private let divisionsStackView = UIStackView()
     
     private let viewModel: UserSearchViewModel
@@ -77,7 +78,8 @@ class UserSearchViewController: UIViewController {
         
         contentView.addSubview(userInfoView)
         contentView.addSubview(divisionTitleLabel)
-        contentView.addSubview(divisionsStackView)
+        contentView.addSubview(divisionsScrollView)
+        divisionsScrollView.addSubview(divisionsStackView)
         
         searchContainerView.translatesAutoresizingMaskIntoConstraints = false
         searchButton.translatesAutoresizingMaskIntoConstraints = false
@@ -86,6 +88,7 @@ class UserSearchViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         userInfoView.translatesAutoresizingMaskIntoConstraints = false
         divisionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        divisionsScrollView.translatesAutoresizingMaskIntoConstraints = false
         divisionsStackView.translatesAutoresizingMaskIntoConstraints = false
         
         searchContainerCenterYConstraint = searchContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -126,21 +129,33 @@ class UserSearchViewController: UIViewController {
             divisionTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             divisionTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            divisionsStackView.topAnchor.constraint(equalTo: divisionTitleLabel.bottomAnchor, constant: 10),
-            divisionsStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            divisionsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            divisionsStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            divisionsScrollView.topAnchor.constraint(equalTo: divisionTitleLabel.bottomAnchor, constant: 10),
+            divisionsScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            divisionsScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            divisionsScrollView.heightAnchor.constraint(equalToConstant: 120),
+            divisionsScrollView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
+            
+            divisionsStackView.topAnchor.constraint(equalTo: divisionsScrollView.topAnchor),
+            divisionsStackView.leadingAnchor.constraint(equalTo: divisionsScrollView.leadingAnchor),
+            divisionsStackView.trailingAnchor.constraint(equalTo: divisionsScrollView.trailingAnchor),
+            divisionsStackView.bottomAnchor.constraint(equalTo: divisionsScrollView.bottomAnchor),
+            divisionsStackView.heightAnchor.constraint(equalTo: divisionsScrollView.heightAnchor)
         ])
         
         divisionTitleLabel.text = "최고 등급"
         divisionTitleLabel.font = .systemFont(ofSize: 20, weight: .bold)
         
-        divisionsStackView.axis = .vertical
-        divisionsStackView.spacing = 10
-        
         userInfoView.isHidden = true
         divisionTitleLabel.isHidden = true
-        divisionsStackView.isHidden = true
+        divisionsScrollView.isHidden = true
+        
+        divisionsScrollView.showsHorizontalScrollIndicator = false
+        divisionsScrollView.alwaysBounceHorizontal = true
+        divisionsScrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20) // 좌우 여백 추가
+        
+        divisionsStackView.axis = .horizontal
+        divisionsStackView.alignment = .fill
+        divisionsStackView.distribution = .equalSpacing
     }
     
     private func bindViewModel() {
@@ -165,18 +180,30 @@ class UserSearchViewController: UIViewController {
     private func configureDivisions(with divisions: [MaxDivision]) {
         divisionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
+        let cardWidth: CGFloat = 150 // 카드 너비를 150으로 변경
+        let cardSpacing: CGFloat = 20 // 카드 간 간격
+        
         divisions.forEach { division in
             let divisionView = DivisionCardView()
-            divisionView.configure(with: division)  // 이 줄을 추가
+            divisionView.configure(with: division)
+            divisionView.widthAnchor.constraint(equalToConstant: cardWidth).isActive = true
+            divisionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             divisionsStackView.addArrangedSubview(divisionView)
         }
+        
+        // 스택 뷰의 너비를 카드들의 총 너비로 설정
+        let totalWidth = CGFloat(divisions.count) * (cardWidth + cardSpacing) - cardSpacing
+        divisionsStackView.widthAnchor.constraint(equalToConstant: totalWidth).isActive = true
+        
+        // 스크롤 뷰의 content size 업데이트
+        divisionsScrollView.contentSize = CGSize(width: totalWidth, height: divisionsScrollView.frame.height)
     }
     
     private func showUserInfo() {
         UIView.animate(withDuration: 0.3) {
             self.userInfoView.isHidden = false
             self.divisionTitleLabel.isHidden = false
-            self.divisionsStackView.isHidden = false
+            self.divisionsScrollView.isHidden = false
         }
     }
     

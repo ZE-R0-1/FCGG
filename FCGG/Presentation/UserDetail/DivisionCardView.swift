@@ -43,15 +43,15 @@ class DivisionCardView: UIView {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            modeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            modeLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            imageView.topAnchor.constraint(equalTo: modeLabel.bottomAnchor, constant: 3),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 40),
             imageView.heightAnchor.constraint(equalToConstant: 40),
             
-            modeLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
-            modeLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
-            divisionNameLabel.topAnchor.constraint(equalTo: modeLabel.bottomAnchor, constant: 4),
+            divisionNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
             divisionNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             dateLabel.topAnchor.constraint(equalTo: divisionNameLabel.bottomAnchor, constant: 4),
