@@ -130,7 +130,7 @@ class UserSearchViewController: UIViewController {
             divisionTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             divisionsScrollView.topAnchor.constraint(equalTo: divisionTitleLabel.bottomAnchor, constant: 10),
-            divisionsScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            divisionsScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor), // 이 부분은 그대로 유지
             divisionsScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             divisionsScrollView.heightAnchor.constraint(equalToConstant: 120),
             divisionsScrollView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
@@ -154,8 +154,9 @@ class UserSearchViewController: UIViewController {
         divisionsScrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20) // 좌우 여백 추가
         
         divisionsStackView.axis = .horizontal
+        divisionsStackView.spacing = 15
         divisionsStackView.alignment = .fill
-        divisionsStackView.distribution = .equalSpacing
+        divisionsStackView.distribution = .fillEqually
     }
     
     private func bindViewModel() {
@@ -180,23 +181,17 @@ class UserSearchViewController: UIViewController {
     private func configureDivisions(with divisions: [MaxDivision]) {
         divisionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-        let cardWidth: CGFloat = 150 // 카드 너비를 150으로 변경
-        let cardSpacing: CGFloat = 20 // 카드 간 간격
-        
         divisions.forEach { division in
             let divisionView = DivisionCardView()
             divisionView.configure(with: division)
-            divisionView.widthAnchor.constraint(equalToConstant: cardWidth).isActive = true
-            divisionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            divisionView.widthAnchor.constraint(equalToConstant: 140).isActive = true
             divisionsStackView.addArrangedSubview(divisionView)
         }
         
-        // 스택 뷰의 너비를 카드들의 총 너비로 설정
-        let totalWidth = CGFloat(divisions.count) * (cardWidth + cardSpacing) - cardSpacing
-        divisionsStackView.widthAnchor.constraint(equalToConstant: totalWidth).isActive = true
-        
-        // 스크롤 뷰의 content size 업데이트
+        let totalWidth = CGFloat(divisions.count) * 160 // 160은 카드 너비(150) + 간격(10)
         divisionsScrollView.contentSize = CGSize(width: totalWidth, height: divisionsScrollView.frame.height)
+        
+        divisionsScrollView.contentOffset = CGPoint(x: -20, y: 0)
     }
     
     private func showUserInfo() {
