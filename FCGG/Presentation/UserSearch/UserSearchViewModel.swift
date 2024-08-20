@@ -12,6 +12,7 @@ import Foundation
 class UserSearchViewModel {
     private let useCase: UserSearchUseCase
     let searchText = PublishSubject<String>()
+    
     lazy var user: Driver<User> = {
         return self.searchText
             .filter { !$0.isEmpty }
@@ -28,6 +29,10 @@ class UserSearchViewModel {
                     }
             }
             .asDriver(onErrorJustReturn: User(ouid: "", nickname: "", level: 0, maxDivisions: []))
+    }()
+    
+    lazy var maxDivisions: Driver<[MaxDivision]> = {
+        return self.user.map { $0.maxDivisions }
     }()
     
     private let disposeBag = DisposeBag()

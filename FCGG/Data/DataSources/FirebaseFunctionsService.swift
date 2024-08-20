@@ -16,7 +16,7 @@ protocol FirebaseFunctionsService {
 class FirebaseFunctionsServiceImpl: FirebaseFunctionsService {
     func getPlayerData(name: String) -> Observable<User> {
         return Observable.create { observer in
-            Functions.functions().httpsCallable("getPlayerData").call(["nickname": name]) { result, error in
+            Functions.functions().httpsCallable("getPlayerBasicInfo").call(["nickname": name]) { result, error in
                 if let error = error as NSError? {
                     print("오류 발생: \(error.localizedDescription)")
                     if let errorDetails = error.userInfo["NSLocalizedDescription"] as? String {
