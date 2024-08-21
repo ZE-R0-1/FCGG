@@ -312,12 +312,4 @@ extension UserSearchViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(with: match)
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100  // 예상 높이, 실제 셀 높이에 따라 조정
-    }
 }
