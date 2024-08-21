@@ -135,6 +135,9 @@ class UserSearchViewController: UIViewController {
         
         // 스크롤 뷰 설정
         scrollView.alwaysBounceVertical = true
+        
+        searchField.delegate = self
+        searchField.returnKeyType = .search
     }
     
     private func setupConstraints() {
@@ -201,6 +204,9 @@ class UserSearchViewController: UIViewController {
     
     private func bindViewModel() {
         searchButton.rx.tap
+            .do(onNext: { [weak self] in
+                self?.view.endEditing(true)  // 키보드 내리기
+            })
             .withLatestFrom(searchField.rx.text.orEmpty)
             .filter { !$0.isEmpty }
             .do(onNext: { [weak self] _ in
@@ -311,5 +317,12 @@ extension UserSearchViewController: UITableViewDataSource, UITableViewDelegate {
         let match = viewModel.currentMatchHistory[indexPath.row]
         cell.configure(with: match)
         return cell
+    }
+}
+
+extension UserSearchViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchButton.sendActions(for: .touchUpInside)
+        return true
     }
 }
