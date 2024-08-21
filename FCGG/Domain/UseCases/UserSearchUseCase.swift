@@ -8,7 +8,9 @@
 import RxSwift
 
 protocol UserSearchUseCase {
-    func searchUser(name: String) -> Observable<User>
+    func getInfo(name: String) -> Observable<User>
+    func getMaxDivision(name: String) -> Observable<[MaxDivision]>
+    func getMatchHistory(name: String) -> Observable<[Match]>
 }
 
 class UserSearchUseCaseImpl: UserSearchUseCase {
@@ -18,7 +20,15 @@ class UserSearchUseCaseImpl: UserSearchUseCase {
         self.repository = repository
     }
     
-    func searchUser(name: String) -> Observable<User> {
-        return repository.searchUser(name: name)
+    func getInfo(name: String) -> Observable<User> {
+        return repository.getInfo(nickname: name)
+    }
+    
+    func getMaxDivision(name: String) -> Observable<[MaxDivision]> {
+        return repository.getMaxDivisions(nickname: name)
+    }
+    
+    func getMatchHistory(name: String) -> Observable<[Match]> {
+        return repository.getMatchHistory(nickname: name)
     }
 }

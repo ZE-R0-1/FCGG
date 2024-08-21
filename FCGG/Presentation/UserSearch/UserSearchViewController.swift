@@ -10,6 +10,17 @@ import RxSwift
 import RxCocoa
 
 class UserSearchViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    private let viewModel: UserSearchViewModel
+    private let disposeBag = DisposeBag()
+    
+    private var searchContainerCenterYConstraint: NSLayoutConstraint?
+    private var searchContainerTopConstraint: NSLayoutConstraint?
+    
+    // MARK: - UI Components
+    
     private let searchContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -41,15 +52,40 @@ class UserSearchViewController: UIViewController {
     private let contentView = UIView()
     
     private let userInfoView = UserInfoView()
-    private let divisionTitleLabel = UILabel()
-    private let divisionsScrollView = UIScrollView()
-    private let divisionsStackView = UIStackView()
+    private let divisionTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "최고 등급"
+        label.font = .systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
     
-    private let viewModel: UserSearchViewModel
-    private let disposeBag = DisposeBag()
+    private let divisionsScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.alwaysBounceHorizontal = true
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        return scrollView
+    }()
     
-    private var searchContainerCenterYConstraint: NSLayoutConstraint?
-    private var searchContainerTopConstraint: NSLayoutConstraint?
+    private let divisionsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 15
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private let matchHistoryTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(MatchInfoView.self, forCellReuseIdentifier: "MatchCell")
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        return tableView
+    }()
+    
+    // MARK: - Initializers
     
     init(viewModel: UserSearchViewModel) {
         self.viewModel = viewModel
@@ -60,11 +96,15 @@ class UserSearchViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
     }
+    
+    // MARK: - Setup UI
     
     private func setupUI() {
         view.backgroundColor = UIColor(red: 240/255, green: 242/255, blue: 245/255, alpha: 1.0)
@@ -81,27 +121,24 @@ class UserSearchViewController: UIViewController {
         contentView.addSubview(divisionsScrollView)
         divisionsScrollView.addSubview(divisionsStackView)
         
-        setupConstraints()
+        contentView.addSubview(matchHistoryTableView)
         
-        divisionTitleLabel.text = "최고 등급"
-        divisionTitleLabel.font = .systemFont(ofSize: 20, weight: .bold)
+        setupConstraints()
         
         userInfoView.isHidden = true
         divisionTitleLabel.isHidden = true
         divisionsScrollView.isHidden = true
+        matchHistoryTableView.isHidden = true
         
-        divisionsScrollView.showsHorizontalScrollIndicator = false
-        divisionsScrollView.alwaysBounceHorizontal = true
-        divisionsScrollView.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        matchHistoryTableView.dataSource = self
+        matchHistoryTableView.delegate = self
         
-        divisionsStackView.axis = .horizontal
-        divisionsStackView.spacing = 15
-        divisionsStackView.alignment = .fill
-        divisionsStackView.distribution = .fillEqually
+        // 스크롤 뷰 설정
+        scrollView.alwaysBounceVertical = true
     }
     
     private func setupConstraints() {
-        [searchContainerView, searchButton, searchField, scrollView, contentView, userInfoView, divisionTitleLabel, divisionsScrollView, divisionsStackView].forEach {
+        [searchContainerView, searchButton, searchField, scrollView, contentView, userInfoView, divisionTitleLabel, divisionsScrollView, divisionsStackView, matchHistoryTableView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -147,15 +184,20 @@ class UserSearchViewController: UIViewController {
             divisionsScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             divisionsScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             divisionsScrollView.heightAnchor.constraint(equalToConstant: 120),
-            divisionsScrollView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
             
-            divisionsStackView.topAnchor.constraint(equalTo: divisionsScrollView.topAnchor),
-            divisionsStackView.leadingAnchor.constraint(equalTo: divisionsScrollView.leadingAnchor),
-            divisionsStackView.trailingAnchor.constraint(equalTo: divisionsScrollView.trailingAnchor),
-            divisionsStackView.bottomAnchor.constraint(equalTo: divisionsScrollView.bottomAnchor),
-            divisionsStackView.heightAnchor.constraint(equalTo: divisionsScrollView.heightAnchor)
+            matchHistoryTableView.topAnchor.constraint(equalTo: divisionsScrollView.bottomAnchor, constant: 20),
+            matchHistoryTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            matchHistoryTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            matchHistoryTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
+        
+        // contentView의 높이를 동적으로 조정
+        let contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
+        contentViewHeightConstraint.priority = .defaultLow
+        contentViewHeightConstraint.isActive = true
     }
+    
+    // MARK: - ViewModel Binding
     
     private func bindViewModel() {
         searchButton.rx.tap
@@ -170,11 +212,25 @@ class UserSearchViewController: UIViewController {
         viewModel.user
             .drive(onNext: { [weak self] user in
                 self?.userInfoView.configure(with: user)
-                self?.configureDivisions(with: user.maxDivisions)
                 self?.showUserInfo()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.maxDivisions
+            .drive(onNext: { [weak self] divisions in
+                self?.configureDivisions(with: divisions)
+                self?.showMaxDivision()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.matchHistory
+            .drive(onNext: { [weak self] _ in
+                self?.updateMatchHistory()
+            })
+            .disposed(by: disposeBag)
     }
+    
+    // MARK: - Private Methods
     
     private func configureDivisions(with divisions: [MaxDivision]) {
         divisionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -193,6 +249,11 @@ class UserSearchViewController: UIViewController {
     private func showUserInfo() {
         UIView.animate(withDuration: 0.3) {
             self.userInfoView.isHidden = false
+        }
+    }
+    
+    private func showMaxDivision() {
+        UIView.animate(withDuration: 0.3) {
             self.divisionTitleLabel.isHidden = false
             self.divisionsScrollView.isHidden = false
         }
@@ -204,5 +265,59 @@ class UserSearchViewController: UIViewController {
             self.searchContainerTopConstraint?.isActive = true
             self.view.layoutIfNeeded()
         }
+    }
+    
+    private func updateMatchHistory() {
+        DispatchQueue.main.async { [weak self] in
+            self?.matchHistoryTableView.reloadData()
+            self?.showMatchHistory()
+            self?.updateContentSize()
+        }
+    }
+    
+    private func updateContentSize() {
+        let contentHeight = userInfoView.frame.maxY +
+        divisionTitleLabel.frame.height +
+        divisionsScrollView.frame.height +
+        matchHistoryTableView.contentSize.height +
+        100  // 추가 여백
+        
+        contentView.frame.size.height = max(contentHeight, scrollView.frame.height)
+        scrollView.contentSize = contentView.frame.size
+    }
+    
+    private func showMatchHistory() {
+        UIView.animate(withDuration: 0.3) {
+            self.matchHistoryTableView.isHidden = false
+        }
+    }
+}
+
+// MARK: - UITableViewDataSource, UITableViewDelegate
+
+extension UserSearchViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let count = viewModel.currentMatchHistory.count
+        print("Number of rows in match history: \(count)")
+        return count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as? MatchInfoView else {
+            print("Failed to dequeue MatchInfoView")
+            return UITableViewCell()
+        }
+        
+        let match = viewModel.currentMatchHistory[indexPath.row]
+        cell.configure(with: match)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100  // 예상 높이, 실제 셀 높이에 따라 조정
     }
 }

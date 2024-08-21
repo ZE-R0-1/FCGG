@@ -8,7 +8,9 @@
 import RxSwift
 
 protocol UserRepository {
-    func searchUser(name: String) -> Observable<User>
+    func getInfo(nickname: String) -> Observable<User>
+    func getMaxDivisions(nickname: String) -> Observable<[MaxDivision]>
+    func getMatchHistory(nickname: String) -> Observable<[Match]>
 }
 
 class UserRepositoryImpl: UserRepository {
@@ -18,7 +20,15 @@ class UserRepositoryImpl: UserRepository {
         self.firebaseFunctions = firebaseFunctions
     }
 
-    func searchUser(name: String) -> Observable<User> {
-        return firebaseFunctions.getPlayerData(name: name)
+    func getInfo(nickname: String) -> Observable<User> {
+        return firebaseFunctions.getPlayerBasicInfo(nickname: nickname)
+    }
+    
+    func getMaxDivisions(nickname: String) -> Observable<[MaxDivision]> {
+        return firebaseFunctions.getPlayerMaxDivision(nickname: nickname)
+    }
+    
+    func getMatchHistory(nickname: String) -> Observable<[Match]> {
+        return firebaseFunctions.getPlayerMatchHistory(nickname: nickname)
     }
 }
