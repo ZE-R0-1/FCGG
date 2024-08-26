@@ -17,7 +17,7 @@
 		CE0457922C6094AF00A3AD70 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */; };
 		CE0457942C61B47900A3AD70 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = CE0457932C61B47900A3AD70 /* FirebaseStorage */; };
 		CE87B85B2C73116100988A4A /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87B85A2C73116100988A4A /* Match.swift */; };
-		CE87B85D2C7311A500988A4A /* MatchHistoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87B85C2C7311A500988A4A /* MatchHistoryItemView.swift */; };
+		CE87B85D2C7311A500988A4A /* MatchSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE87B85C2C7311A500988A4A /* MatchSummaryCell.swift */; };
 		CEE1BBE52C537C9D005B90B7 /* UserSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */; };
 		CEE1BBEA2C537FBD005B90B7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CEE1BBE92C537FBD005B90B7 /* Kingfisher */; };
 		CEE25FC42C50CB0500053335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE25FC32C50CB0500053335 /* Assets.xcassets */; };
@@ -41,7 +41,7 @@
 		CE04578F2C60949D00A3AD70 /* APIErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrorHandler.swift; sourceTree = "<group>"; };
 		CE0457912C6094AF00A3AD70 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		CE87B85A2C73116100988A4A /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
-		CE87B85C2C7311A500988A4A /* MatchHistoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchHistoryItemView.swift; sourceTree = "<group>"; };
+		CE87B85C2C7311A500988A4A /* MatchSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchSummaryCell.swift; sourceTree = "<group>"; };
 		CEE1BBE42C537C9D005B90B7 /* UserSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchViewModel.swift; sourceTree = "<group>"; };
 		CEE25FB72C50CB0300053335 /* FCGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FCGG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE25FC32C50CB0500053335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 			children = (
 				CEF0F3772C61BBC300F5CBC6 /* UserInfoView.swift */,
 				CEF0F3792C61BBD400F5CBC6 /* DivisionCardView.swift */,
-				CE87B85C2C7311A500988A4A /* MatchHistoryItemView.swift */,
+				CE87B85C2C7311A500988A4A /* MatchSummaryCell.swift */,
 			);
 			path = UserDetail;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE87B85D2C7311A500988A4A /* MatchHistoryItemView.swift in Sources */,
+				CE87B85D2C7311A500988A4A /* MatchSummaryCell.swift in Sources */,
 				CEE25FFC2C50CBA500053335 /* UserSearchViewController.swift in Sources */,
 				CEF0F3782C61BBC300F5CBC6 /* UserInfoView.swift in Sources */,
 				CE87B85B2C73116100988A4A /* Match.swift in Sources */,

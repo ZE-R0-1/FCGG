@@ -14,6 +14,7 @@ class UserSearchViewModel {
     let searchText = PublishSubject<String>()
     
     private let matchHistoryRelay = BehaviorRelay<[Match]>(value: [])
+    private let userRelay = BehaviorRelay<User?>(value: nil)
 
     lazy var user: Driver<User> = {
         return self.searchText
@@ -30,6 +31,9 @@ class UserSearchViewModel {
                         return Observable.empty()
                     }
             }
+            .do(onNext: { [weak self] user in
+                self?.userRelay.accept(user)
+            })
             .asDriver(onErrorJustReturn: User(ouid: "", nickname: "", level: 0, maxDivisions: []))
     }()
     
@@ -61,6 +65,11 @@ class UserSearchViewModel {
             })
             .asDriver(onErrorJustReturn: [])
     }()
+    
+    
+    var currentUser: User? {
+        return userRelay.value
+    }
     
     var currentMatchHistory: [Match] {
         return matchHistoryRelay.value

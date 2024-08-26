@@ -1,5 +1,5 @@
 //
-//  SearchResultView.swift
+//  UserSearchViewController.swift
 //  FCGG
 //
 //  Created by USER on 7/24/24.
@@ -18,8 +18,12 @@ class UserSearchViewController: UIViewController {
     
     private var searchContainerCenterYConstraint: NSLayoutConstraint?
     private var searchContainerTopConstraint: NSLayoutConstraint?
+    private var scrollViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - UI Components
+    
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
     
     private let searchContainerView: UIView = {
         let view = UIView()
@@ -48,9 +52,6 @@ class UserSearchViewController: UIViewController {
         return field
     }()
     
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
-    
     private let userInfoView = UserInfoView()
     private let divisionTitleLabel: UILabel = {
         let label = UILabel()
@@ -78,10 +79,10 @@ class UserSearchViewController: UIViewController {
     
     private let matchHistoryTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(MatchInfoView.self, forCellReuseIdentifier: "MatchCell")
+        tableView.register(MatchSummaryCell.self, forCellReuseIdentifier: "MatchCell")
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -102,6 +103,7 @@ class UserSearchViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
+        setupKeyboardObservers()
     }
     
     // MARK: - Setup UI
@@ -133,9 +135,6 @@ class UserSearchViewController: UIViewController {
         matchHistoryTableView.dataSource = self
         matchHistoryTableView.delegate = self
         
-        // 스크롤 뷰 설정
-        scrollView.alwaysBounceVertical = true
-        
         searchField.delegate = self
         searchField.returnKeyType = .search
     }
@@ -148,6 +147,8 @@ class UserSearchViewController: UIViewController {
         searchContainerCenterYConstraint = searchContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         searchContainerTopConstraint = searchContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
         searchContainerTopConstraint?.isActive = false
+        
+        scrollViewBottomConstraint = scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         
         NSLayoutConstraint.activate([
             searchContainerCenterYConstraint!,
@@ -167,15 +168,15 @@ class UserSearchViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: searchContainerView.bottomAnchor, constant: 20),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollViewBottomConstraint!,
             
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor),
             
-            userInfoView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            userInfoView.topAnchor.constraint(equalTo: contentView.topAnchor),
             userInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             userInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
@@ -193,11 +194,30 @@ class UserSearchViewController: UIViewController {
             matchHistoryTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             matchHistoryTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
-        
-        // contentView의 높이를 동적으로 조정
-        let contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
-        contentViewHeightConstraint.priority = .defaultLow
-        contentViewHeightConstraint.isActive = true
+    }
+    
+    // MARK: - Keyboard Handling
+    
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            UIView.animate(withDuration: 0.3) {
+                self.searchContainerCenterYConstraint?.constant = -(self.view.bounds.height / 2 - keyboardHeight - self.searchContainerView.bounds.height / 2)
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.searchContainerCenterYConstraint?.constant = 0
+            self.view.layoutIfNeeded()
+        }
     }
     
     // MARK: - ViewModel Binding
@@ -205,13 +225,11 @@ class UserSearchViewController: UIViewController {
     private func bindViewModel() {
         searchButton.rx.tap
             .do(onNext: { [weak self] in
-                self?.view.endEditing(true)  // 키보드 내리기
+                self?.view.endEditing(true)
+                self?.animateSearchToTop()
             })
             .withLatestFrom(searchField.rx.text.orEmpty)
             .filter { !$0.isEmpty }
-            .do(onNext: { [weak self] _ in
-                self?.animateSearchToTop()
-            })
             .bind(to: viewModel.searchText)
             .disposed(by: disposeBag)
         
@@ -277,24 +295,31 @@ class UserSearchViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.matchHistoryTableView.reloadData()
             self?.showMatchHistory()
-            self?.updateContentSize()
+            self?.updateTableViewHeight()
+            self?.updateScrollViewContentSize()
         }
-    }
-    
-    private func updateContentSize() {
-        let contentHeight = userInfoView.frame.maxY +
-        divisionTitleLabel.frame.height +
-        divisionsScrollView.frame.height +
-        matchHistoryTableView.contentSize.height +
-        100  // 추가 여백
-        
-        contentView.frame.size.height = max(contentHeight, scrollView.frame.height)
-        scrollView.contentSize = contentView.frame.size
     }
     
     private func showMatchHistory() {
         UIView.animate(withDuration: 0.3) {
             self.matchHistoryTableView.isHidden = false
+        }
+    }
+    
+    private func updateTableViewHeight() {
+        matchHistoryTableView.layoutIfNeeded()
+        let height = matchHistoryTableView.contentSize.height
+        matchHistoryTableView.constraints.forEach { constraint in
+            if constraint.firstAttribute == .height {
+                matchHistoryTableView.removeConstraint(constraint)
+            }
+        }
+        matchHistoryTableView.heightAnchor.constraint(equalToConstant: height).isActive = true
+    }
+    
+    private func updateScrollViewContentSize() {
+        DispatchQueue.main.async {
+            self.scrollView.contentSize = self.contentView.bounds.size
         }
     }
 }
@@ -303,26 +328,41 @@ class UserSearchViewController: UIViewController {
 
 extension UserSearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = viewModel.currentMatchHistory.count
-        print("Number of rows in match history: \(count)")
-        return count
+        return viewModel.currentMatchHistory.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as? MatchInfoView else {
-            print("Failed to dequeue MatchInfoView")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as? MatchSummaryCell else {
             return UITableViewCell()
         }
         
         let match = viewModel.currentMatchHistory[indexPath.row]
-        cell.configure(with: match)
+        if let userNickname = viewModel.currentUser?.nickname {
+            cell.configure(with: match, userNickname: userNickname)
+        } else {
+            cell.configure(with: match, userNickname: "???")
+        }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70 // 또는 원하는 높이로 설정
+    }
 }
+
+// MARK: - UITextFieldDelegate
 
 extension UserSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchButton.sendActions(for: .touchUpInside)
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // 텍스트 필드 편집이 시작될 때 추가 동작이 필요한 경우 여기에 구현
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // 텍스트 필드 편집이 끝날 때 추가 동작이 필요한 경우 여기에 구현
     }
 }
