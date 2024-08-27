@@ -9,14 +9,11 @@ import UIKit
 
 class MatchSummaryCell: UITableViewCell {
     // MARK: - Properties
-    
+
     static let reuseIdentifier = "MatchSummaryCell"
-    
-    private let resultView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
+
+    private let resultLayer = CALayer()
+
     private let resultLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -24,14 +21,14 @@ class MatchSummaryCell: UITableViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
     private let scoreLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textAlignment = .left
         return label
     }()
-    
+
     private let opponentLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16)
@@ -39,7 +36,7 @@ class MatchSummaryCell: UITableViewCell {
         label.textAlignment = .left
         return label
     }()
-    
+
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
@@ -47,7 +44,7 @@ class MatchSummaryCell: UITableViewCell {
         label.textAlignment = .right
         return label
     }()
-    
+
     private let competitionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
@@ -55,72 +52,86 @@ class MatchSummaryCell: UITableViewCell {
         label.textAlignment = .right
         return label
     }()
-    
+
     private var userNickname: String?
-    
+
     // MARK: - Initialization
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
-    
+
     private func setupViews() {
-        contentView.addSubview(resultView)
-        resultView.addSubview(resultLabel)
+        backgroundColor = UIColor(red: 240/255, green: 242/255, blue: 245/255, alpha: 1.0)
+        
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+        
+        contentView.layer.addSublayer(resultLayer)
+        contentView.addSubview(resultLabel)
         contentView.addSubview(scoreLabel)
         contentView.addSubview(opponentLabel)
         contentView.addSubview(dateLabel)
         contentView.addSubview(competitionLabel)
-        
+
         setupConstraints()
     }
-    
+
     private func setupConstraints() {
-        [resultView, resultLabel, scoreLabel, opponentLabel, dateLabel, competitionLabel].forEach {
+        [resultLabel, scoreLabel, opponentLabel, dateLabel, competitionLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+
         NSLayoutConstraint.activate([
-            resultView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            resultView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            resultView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            resultView.widthAnchor.constraint(equalToConstant: 60),
-            
-            resultLabel.centerXAnchor.constraint(equalTo: resultView.centerXAnchor),
-            resultLabel.centerYAnchor.constraint(equalTo: resultView.centerYAnchor),
-            
-            scoreLabel.leadingAnchor.constraint(equalTo: resultView.trailingAnchor, constant: 16),
+            resultLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            resultLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            resultLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            resultLabel.widthAnchor.constraint(equalToConstant: 60),
+
+            scoreLabel.leadingAnchor.constraint(equalTo: resultLabel.trailingAnchor, constant: 16),
             scoreLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+
             opponentLabel.leadingAnchor.constraint(equalTo: scoreLabel.trailingAnchor, constant: 16),
             opponentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             opponentLabel.trailingAnchor.constraint(lessThanOrEqualTo: dateLabel.leadingAnchor, constant: -16),
-            
+
             dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            
+
             competitionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             competitionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
-    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Update resultLayer frame
+        resultLayer.frame = CGRect(x: 0, y: 0, width: 60, height: contentView.bounds.height)
+        
+        // Add some padding to the cell content
+        let padding: CGFloat = 5
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
+    }
+
     // MARK: - Configuration
-    
+
     func configure(with match: Match, userNickname: String) {
         self.userNickname = userNickname
-        
+
         guard let homeTeam = match.matchInfo.first, let awayTeam = match.matchInfo.last else { return }
-        
+
         let userTeam: MatchInfo
         let opposingTeam: MatchInfo
-        
+
         if homeTeam.nickname == userNickname {
             userTeam = homeTeam
             opposingTeam = awayTeam
@@ -128,23 +139,23 @@ class MatchSummaryCell: UITableViewCell {
             userTeam = awayTeam
             opposingTeam = homeTeam
         }
-        
+
         configureResult(with: userTeam.matchDetail.matchResult)
         scoreLabel.text = "\(awayTeam.shoot.goalTotal) : \(homeTeam.shoot.goalTotal)"
         opponentLabel.text = opposingTeam.nickname
         dateLabel.text = getRelativeTimeString(from: match.matchDate)
         competitionLabel.text = getCompetitionName(for: match.matchType)
     }
-    
+
     private func configureResult(with result: String) {
         resultLabel.text = result
         switch result {
         case "승":
-            resultView.backgroundColor = .systemBlue
+            resultLayer.backgroundColor = UIColor.systemBlue.cgColor
         case "패":
-            resultView.backgroundColor = .systemRed
+            resultLayer.backgroundColor = UIColor.systemRed.cgColor
         default:
-            resultView.backgroundColor = .systemGray
+            resultLayer.backgroundColor = UIColor.systemGray.cgColor
         }
     }
     

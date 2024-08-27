@@ -81,9 +81,15 @@ class UserSearchViewController: UIViewController {
         let tableView = UITableView()
         tableView.register(MatchSummaryCell.self, forCellReuseIdentifier: "MatchCell")
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
         tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
         return tableView
+    }()
+    
+    private let loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        return indicator
     }()
     
     // MARK: - Initializers
@@ -121,9 +127,10 @@ class UserSearchViewController: UIViewController {
         contentView.addSubview(userInfoView)
         contentView.addSubview(divisionTitleLabel)
         contentView.addSubview(divisionsScrollView)
-        divisionsScrollView.addSubview(divisionsStackView)
-        
         contentView.addSubview(matchHistoryTableView)
+        contentView.addSubview(loadingIndicator)
+
+        divisionsScrollView.addSubview(divisionsStackView)
         
         setupConstraints()
         
@@ -140,7 +147,7 @@ class UserSearchViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        [searchContainerView, searchButton, searchField, scrollView, contentView, userInfoView, divisionTitleLabel, divisionsScrollView, divisionsStackView, matchHistoryTableView].forEach {
+        [searchContainerView, searchButton, searchField, scrollView, contentView, userInfoView, divisionTitleLabel, divisionsScrollView, divisionsStackView, matchHistoryTableView, loadingIndicator].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
@@ -193,6 +200,9 @@ class UserSearchViewController: UIViewController {
             matchHistoryTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             matchHistoryTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             matchHistoryTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            loadingIndicator.centerXAnchor.constraint(equalTo: matchHistoryTableView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: matchHistoryTableView.centerYAnchor)
         ])
     }
     
@@ -247,6 +257,18 @@ class UserSearchViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.isLoading
+            .drive(onNext: { [weak self] isLoading in
+                if isLoading {
+                    self?.loadingIndicator.startAnimating()
+                    self?.matchHistoryTableView.alpha = 0.5
+                } else {
+                    self?.loadingIndicator.stopAnimating()
+                    self?.matchHistoryTableView.alpha = 1.0
+                }
+            })
+            .disposed(by: disposeBag)
+
         viewModel.matchHistory
             .drive(onNext: { [weak self] _ in
                 self?.updateMatchHistory()
@@ -356,13 +378,5 @@ extension UserSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchButton.sendActions(for: .touchUpInside)
         return true
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        // 텍스트 필드 편집이 시작될 때 추가 동작이 필요한 경우 여기에 구현
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        // 텍스트 필드 편집이 끝날 때 추가 동작이 필요한 경우 여기에 구현
     }
 }

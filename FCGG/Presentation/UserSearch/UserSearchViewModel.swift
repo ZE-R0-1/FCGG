@@ -15,7 +15,11 @@ class UserSearchViewModel {
     
     private let matchHistoryRelay = BehaviorRelay<[Match]>(value: [])
     private let userRelay = BehaviorRelay<User?>(value: nil)
-
+    private let isLoadingRelay = BehaviorRelay<Bool>(value: false)
+    var isLoading: Driver<Bool> {
+        return isLoadingRelay.asDriver()
+    }
+    
     lazy var user: Driver<User> = {
         return self.searchText
             .filter { !$0.isEmpty }
@@ -49,10 +53,13 @@ class UserSearchViewModel {
             }
             .asDriver(onErrorJustReturn: [])
     }()
-    
+
     lazy var matchHistory: Driver<[Match]> = {
         return self.searchText
             .filter { !$0.isEmpty }
+            .do(onNext: { [weak self] _ in
+                self?.isLoadingRelay.accept(true)
+            })
             .flatMapLatest { [unowned self] query in
                 self.useCase.getMatchHistory(name: query)
                     .catch { error in
@@ -62,10 +69,10 @@ class UserSearchViewModel {
             }
             .do(onNext: { [weak self] matches in
                 self?.matchHistoryRelay.accept(matches)
+                self?.isLoadingRelay.accept(false)
             })
             .asDriver(onErrorJustReturn: [])
     }()
-    
     
     var currentUser: User? {
         return userRelay.value
